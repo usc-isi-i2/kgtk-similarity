@@ -1,0 +1,6 @@
+{
+  "es_url": "http://ckg06.isi.edu:9200",
+  "complex_ge_index": "wikidataos-graph-embedding-03",
+  "text_embeddings_index": "wikidataos-text-embedding-03",
+  "labels_index": "wikidataos-07"
+}

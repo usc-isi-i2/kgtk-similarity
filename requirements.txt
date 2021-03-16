@@ -1,0 +1,5 @@
+requests
+Flask
+Flask-Cors
+Flask-RESTful
+sklearn
