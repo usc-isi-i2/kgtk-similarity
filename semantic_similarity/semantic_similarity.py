@@ -25,22 +25,23 @@ class SemanticSimilarity(object):
         if q2_embeddings is None:
             return {'error': f"The qnode: {q2} is not present in DWD"}
 
-        if embeddings_type == 'complex':
+        if embeddings_type == 'complex' or 'text':
             return {
-                'similarity': np.dot(q1_embeddings, q2_embeddings),
-                'q1': q1,
-                'q1_label': self.get_label(q1),
-                'q2': q2,
-                'q2_label': self.get_label(q2)
-            }
-        if embeddings_type == 'text':
-            return {
+                # 'similarity': np.dot(q1_embeddings, q2_embeddings),
                 'similarity': cosine_similarity(q1_embeddings.reshape(1, -1), q2_embeddings.reshape(1, -1))[0][0],
                 'q1': q1,
                 'q1_label': self.get_label(q1),
                 'q2': q2,
                 'q2_label': self.get_label(q2)
             }
+        # if embeddings_type == 'text':
+        #     return {
+        #         'similarity': cosine_similarity(q1_embeddings.reshape(1, -1), q2_embeddings.reshape(1, -1))[0][0],
+        #         'q1': q1,
+        #         'q1_label': self.get_label(q1),
+        #         'q2': q2,
+        #         'q2_label': self.get_label(q2)
+        #     }
 
     def get_embeddings(self, qnode, embeddings_type):
         es_search_url = f"{self.config['es_url']}/{embeddings_to_index[embeddings_type]}/_doc/{qnode}"
@@ -64,6 +65,5 @@ class SemanticSimilarity(object):
                 label = _labels['en'][0]
         return label
 
-
-ss = SemanticSimilarity()
-print(json.dumps(ss.semantic_similarity('Q76', 'Q30', 'complex')))
+# ss = SemanticSimilarity()
+# print(json.dumps(ss.semantic_similarity('Q76', 'Q30', 'complex')))
