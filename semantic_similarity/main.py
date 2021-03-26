@@ -14,7 +14,7 @@ class QnodeSimilarity(Resource):
         if q1 is None or q2 is None or embedding_type is None:
             return {'error': "q1, q2 and embedding_type cannot be None"}
 
-        if embedding_type not in ['complex', 'text']:
-            return {'error': "embedding_type should be one of ['complex', 'text']"}
+        if embedding_type not in ['complex', 'text', 'transe']:
+            return {'error': "embedding_type should be one of ['complex', 'text', 'transe']"}
 
         return self.ss.semantic_similarity(q1, q2, embedding_type)

@@ -7,7 +7,8 @@ config = json.load(open('semantic_similarity/config.json'))
 
 embeddings_to_index_field = {
     "complex": "graph_embedding_complex",
-    "text": "text_embedding"
+    "text": "text_embedding",
+    "transe": "graph_embeddings_transe"
 }
 
 
@@ -45,7 +46,7 @@ class SemanticSimilarity(object):
             embedding = qnode_result['_source'][embeddings_to_index_field[embeddings_type]]
 
             if isinstance(embedding, str):
-                embedding = embedding.split(" ")
+                embedding = embedding.split(",")
             embedding = np.array([float(x) for x in embedding])
 
             _labels = qnode_result['_source']['labels']
