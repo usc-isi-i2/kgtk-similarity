@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Title = ({ title }) => {
+const Header = () => {
 
   const classes = useStyles()
 
@@ -35,10 +35,10 @@ const Title = ({ title }) => {
           <Logo/>
         </div>
       </a>
-      {title}
+      Knowledge Graph Semantic Similarity
     </Typography>
   )
 }
 
 
-export default Title
+export default Header
