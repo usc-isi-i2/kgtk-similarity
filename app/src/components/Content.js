@@ -2,6 +2,7 @@ import React from 'react'
 
 import Header from './Header'
 import Subject from './Subject'
+import TestNodes from './TestNodes'
 
 
 const Content = () => {
@@ -9,6 +10,7 @@ const Content = () => {
     <React.Fragment>
       <Header />
       <Subject />
+      <TestNodes />
     </React.Fragment>
   )
 }
