@@ -13,7 +13,7 @@ import Input from './Input'
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(6),
     paddingTop: theme.spacing(6),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
   },
   result: {
     position: 'relative',
