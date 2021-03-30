@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Grid'
+import CancelIcon from '@material-ui/icons/Cancel'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 
@@ -58,6 +60,18 @@ const useStyles = makeStyles(theme => ({
     color: '#fefefe',
     textDecoration: 'none',
     marginTop: theme.spacing(1),
+  },
+  cancel: {
+    color: '#ccc',
+    position: 'absolute',
+    top: theme.spacing(7),
+    right: theme.spacing(5),
+    transform: 'scale(2)',
+    cursor: 'pointer',
+    transition: 'all 350ms ease',
+    '&:hover': {
+      color: '#fefefe',
+    },
   },
 }))
 
@@ -177,6 +191,10 @@ const Subject = ({ title }) => {
           <Typography component="h5" variant="h5">
             { subject.description[0] }
           </Typography>
+          <IconButton className={classes.cancel}
+            onClick={event => setSubject(null)}>
+            <CancelIcon fontSize="large" />
+          </IconButton>
         </Paper>
       )
     }
