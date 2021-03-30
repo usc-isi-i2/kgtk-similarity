@@ -2,6 +2,7 @@ import React from 'react'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import {
@@ -56,6 +57,37 @@ const styles = theme => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+  },
+  result: {
+    position: 'relative',
+    marginTop: theme.spacing(3),
+  },
+  link: {
+    width: '97%',
+    display: 'inline-block',
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(5),
+    color: '#fefefe',
+    transition: '0.2s background ease',
+    '&:hover': {
+      background: 'rgba(255, 255, 255, 0.1)',
+      textDecoration: 'none',
+      cursor: 'pointer',
+    },
+  },
+  index: {
+    color: '#fefefe',
+    position: 'absolute',
+    top: theme.spacing(1),
+    left: theme.spacing(1),
+  },
+  label: {
+    color: '#fefefe',
+    textDecoration: 'underline',
+  },
+  description: {
+    color: '#fefefe',
+    textDecoration: 'none',
   },
 })
 
@@ -126,7 +158,47 @@ class App extends React.Component {
     )
   }
 
-  render () {
+  renderResults() {
+    const { classes } = this.props
+    const { results } = this.state
+    return results.map((result, i) => (
+      <Grid item xs={ 12 } key={ i } className={ classes.result }>
+        <Typography
+          component="h5"
+          variant="h5"
+          className={ classes.index }>
+          { i + 1 }.
+        </Typography>
+        <Link
+          href={`https://ringgaard.com/kb/${result.qnode}`}
+          target="_blank"
+          className={ classes.link }>
+          <Typography
+            component="h5"
+            variant="h5"
+            className={ classes.label }>
+            { result.label[0] } ({ result.qnode })
+          </Typography>
+          <Typography
+            component="p"
+            variant="body1"
+            className={ classes.description }>
+            <b>Description:</b> { !!result.description[0] ? result.description[0] : 'No Description'}
+          </Typography>
+          { !!result.alias.length ? (
+            <Typography
+              component="p"
+              variant="body1"
+              className={ classes.description }>
+              <b>Alias:</b> { result.alias.join(', ') }
+            </Typography>
+          ) : null }
+        </Link>
+      </Grid>
+    ))
+  }
+
+  render() {
     const { classes } = this.props
     return (
       <ThemeProvider theme={ theme }>
@@ -146,6 +218,7 @@ class App extends React.Component {
                     </Grid>
                   </Grid>
                 </Paper>
+                {this.renderResults()}
               </Grid>
             </Grid>
           </form>
