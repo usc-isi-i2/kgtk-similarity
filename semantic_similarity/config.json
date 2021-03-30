@@ -1,4 +1,4 @@
 {
-  "es_url": "http://ckg06.isi.edu:9200",
+  "es_url": "http://ckg07.isi.edu:9200",
   "es_index": "wikidatadwd-augmented-02"
 }
