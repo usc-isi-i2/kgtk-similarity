@@ -13,7 +13,7 @@ import {
   ThemeProvider,
 } from '@material-ui/core/styles'
 
-import Logo from './components/Logo'
+import Title from './components/Title'
 import Input from './components/Input'
 import ArrowUp from './components/ArrowUp'
 
@@ -31,17 +31,6 @@ const styles = theme => ({
       padding: theme.spacing(3, 1),
       height: '100vh',
     },
-  },
-  header: {
-    color: '#fefefe',
-    marginTop: theme.spacing(3),
-  },
-  logo: {
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-    marginRight: theme.spacing(2),
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -167,23 +156,6 @@ class App extends React.Component {
     this.submitQuery()
   }
 
-  renderTitle() {
-    const { classes } = this.props
-    return (
-      <Typography
-        component="h3"
-        variant="h3"
-        className={ classes.header }>
-        <a href="https://github.com/usc-isi-i2/kgtk" title="Knowledge Graph Toolkit" rel="noopener noreferrer nofollow" target="_blank">
-          <div className={ classes.logo }>
-            <Logo/>
-          </div>
-        </a>
-        Knowledge Graph Semantic Similarity
-      </Typography>
-    )
-  }
-
   renderResults() {
     const { classes } = this.props
     const { results, selected } = this.state
@@ -237,7 +209,7 @@ class App extends React.Component {
         <Container maxWidth="xl">
           <div id="top"/>
           <CssBaseline/>
-          {this.renderTitle()}
+          <Title title="Knowledge Graph Semantic Similarity" />
           <form className={ classes.form } noValidate
             onSubmit={ this.submit.bind(this) }>
             <Grid container spacing={ 3 }>
