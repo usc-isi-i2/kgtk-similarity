@@ -8,8 +8,7 @@ import {
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import Title from './components/Title'
-import Subject from './components/Subject'
+import Content from './components/Content'
 import ArrowUp from './components/ArrowUp'
 
 
@@ -35,9 +34,8 @@ const App = () => {
       <Container maxWidth="xl">
         <div id="top"/>
         <CssBaseline/>
-        <Title title="Knowledge Graph Semantic Similarity" />
-        <Subject />
-        <ArrowUp/>
+        <Content />
+        <ArrowUp />
       </Container>
     </ThemeProvider>
   )
