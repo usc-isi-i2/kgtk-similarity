@@ -47,7 +47,7 @@ const styles = theme => ({
     paddingTop: theme.spacing(6),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(6),
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',
@@ -88,6 +88,7 @@ const styles = theme => ({
   description: {
     color: '#fefefe',
     textDecoration: 'none',
+    marginTop: theme.spacing(1),
   },
 })
 
