@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
+import Checkbox from '@material-ui/core/Checkbox'
 import Typography from '@material-ui/core/Typography'
 import {
   withStyles,
@@ -81,6 +82,19 @@ const styles = theme => ({
     top: theme.spacing(1),
     left: theme.spacing(1),
   },
+  checkbox: {
+    color: '#fefefe',
+    position: 'absolute',
+    top: theme.spacing(5),
+    left: theme.spacing(0),
+    transform: 'scale(1.5)',
+    '& .Mui-checked': {
+      color: 'limegreen',
+    },
+    '& .MuiCheckbox-colorSecondary.Mui-checked': {
+      color: 'limegreen',
+    },
+  },
   label: {
     color: '#fefefe',
     textDecoration: 'underline',
@@ -91,6 +105,17 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
   },
 })
+
+
+const CustomCheckbox = withStyles({
+  root: {
+    color: '#fefefe',
+    '&$checked': {
+      color: 'limegreen',
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />)
 
 
 class App extends React.Component {
@@ -161,7 +186,7 @@ class App extends React.Component {
 
   renderResults() {
     const { classes } = this.props
-    const { results } = this.state
+    const { results, selected } = this.state
     return results.map((result, i) => (
       <Grid item xs={ 12 } key={ i } className={ classes.result }>
         <Typography
@@ -170,6 +195,12 @@ class App extends React.Component {
           className={ classes.index }>
           { i + 1 }.
         </Typography>
+        <CustomCheckbox
+          className={classes.checkbox}
+          checked={selected}
+          disableRipple={true}
+          onChange={() => this.setState({selected: !selected})}
+        />
         <Link
           href={`https://ringgaard.com/kb/${result.qnode}`}
           target="_blank"
