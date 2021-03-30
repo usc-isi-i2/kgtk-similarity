@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
@@ -47,19 +48,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(1),
     left: theme.spacing(1),
-  },
-  checkbox: {
-    color: '#fefefe',
-    position: 'absolute',
-    top: theme.spacing(5),
-    left: theme.spacing(0),
-    transform: 'scale(1.5)',
-    '& .Mui-checked': {
-      color: 'limegreen',
-    },
-    '& .MuiCheckbox-colorSecondary.Mui-checked': {
-      color: 'limegreen',
-    },
   },
   label: {
     color: '#fefefe',
@@ -140,11 +128,41 @@ const Subject = ({ title }) => {
   }
 
   const renderResults = () => {
-    return (
-      <Typography component="h3" variant="h3">
-        {JSON.stringify(results)}
-      </Typography>
-    )
+    return results.map((result, i) => (
+      <Grid item xs={ 12 } key={ i } className={ classes.result }>
+        <Typography
+          component="h5"
+          variant="h5"
+          className={ classes.index }>
+          { i + 1 }.
+        </Typography>
+        <Link
+          href={`https://ringgaard.com/kb/${result.qnode}`}
+          target="_blank"
+          className={ classes.link }>
+          <Typography
+            component="h5"
+            variant="h5"
+            className={ classes.label }>
+            { result.label[0] } ({ result.qnode })
+          </Typography>
+          <Typography
+            component="p"
+            variant="body1"
+            className={ classes.description }>
+            <b>Description:</b> { !!result.description[0] ? result.description[0] : 'No Description'}
+          </Typography>
+          { !!result.alias.length ? (
+            <Typography
+              component="p"
+              variant="body1"
+              className={ classes.description }>
+              <b>Alias:</b> { result.alias.join(', ') }
+            </Typography>
+          ) : null }
+        </Link>
+      </Grid>
+    ))
   }
 
   const renderSubject = () => {
