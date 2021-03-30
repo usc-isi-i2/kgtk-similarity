@@ -19,8 +19,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'start',
     position: 'relative',
+    color: '#fefefe',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -107,24 +108,26 @@ const Subject = ({ title }) => {
   }
 
   const renderSearch = () => {
-    return (
-      <form className={ classes.form } noValidate
-        onSubmit={event => handleSubmit(event)}>
-        <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 }>
-            <Paper component="div" className={ classes.paper } square>
-              <Grid container spacing={ 3 }>
-                <Grid item xs={ 12 }>
-                  <Input autoFocus={ true } label={'Search'}
-                    onChange={query => handleOnChange(query)}/>
+    if ( !subject ) {
+      return (
+        <form className={ classes.form } noValidate
+          onSubmit={event => handleSubmit(event)}>
+          <Grid container spacing={ 3 }>
+            <Grid item xs={ 12 }>
+              <Paper component="div" className={ classes.paper } square>
+                <Grid container spacing={ 3 }>
+                  <Grid item xs={ 12 }>
+                    <Input autoFocus={ true } label={'Search'}
+                      onChange={query => handleOnChange(query)}/>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
-            {renderResults()}
+              </Paper>
+              {renderResults()}
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    )
+        </form>
+      )
+    }
   }
 
   const renderResults = () => {
@@ -137,8 +140,7 @@ const Subject = ({ title }) => {
           { i + 1 }.
         </Typography>
         <Link
-          href={`https://ringgaard.com/kb/${result.qnode}`}
-          target="_blank"
+          onClick={event => setSubject(result)}
           className={ classes.link }>
           <Typography
             component="h5"
@@ -166,16 +168,24 @@ const Subject = ({ title }) => {
   }
 
   const renderSubject = () => {
-    return (
-      <Typography component="h3" variant="h3">
-        {JSON.stringify(subject)}
-      </Typography>
-    )
+    if ( subject ) {
+      return (
+        <Paper component="div" className={ classes.paper } square>
+          <Typography component="h4" variant="h4">
+            <b>{ subject.label[0] } ({ subject.qnode })</b>
+          </Typography>
+          <Typography component="h5" variant="h5">
+            { subject.description[0] }
+          </Typography>
+        </Paper>
+      )
+    }
   }
 
   return (
     <React.Fragment>
-      {subject ? renderSubject() : renderSearch()}
+      {renderSearch()}
+      {renderSubject()}
     </React.Fragment>
   )
 }
