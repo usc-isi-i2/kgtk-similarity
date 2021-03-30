@@ -5,7 +5,7 @@
 
 - `q1`: The first qnode for comparison, eg: Q76
 - `q2`: The second qnode for comparison. eg: Q30
-- `embedding_type`: type of embedding vector(s) to be used, valid values are [`complex`, `text`]
+- `embedding_type`: type of embedding vector(s) to be used, valid values are [`complex`, `transe`, `text`]
 
 ## Examples
 
