@@ -30,7 +30,10 @@ const Header = () => {
       component="h3"
       variant="h3"
       className={ classes.header }>
-      <a href="https://github.com/usc-isi-i2/kgtk" title="Knowledge Graph Toolkit" rel="noopener noreferrer nofollow" target="_blank">
+      <a href="https://github.com/usc-isi-i2/kgtk"
+        title="Knowledge Graph Toolkit"
+        rel="noopener noreferrer nofollow"
+        target="_blank">
         <div className={ classes.logo }>
           <Logo/>
         </div>
