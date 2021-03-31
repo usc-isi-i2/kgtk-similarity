@@ -73,6 +73,15 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
     marginTop: theme.spacing(1),
   },
+  progressBar: {
+    backgroundColor: 'rgba(0, 255, 0, 0.35)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: '100%',
+    transform: 'right 250ms ease',
+  },
 }))
 
 
@@ -170,11 +179,15 @@ const TestNodes = ({ subject }) => {
                 <Paper component="div"
                   className={classes.paper} square>
                   {!!selected.similarity[type] ? (
-                    <Typography component="h5" variant="h5"
-                      style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
-                      title={selected.similarity[type]}>
-                      {Math.round(selected.similarity[type] * 100) / 100}
-                    </Typography>
+                    <React.Fragment>
+                      <div className={classes.progressBar}
+                        style={{  right: `${100 - Math.round(selected.similarity[type] * 100)}%` }}></div>
+                      <Typography component="h5" variant="h5"
+                        style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
+                        title={selected.similarity[type]}>
+                        {Math.round(selected.similarity[type] * 100) / 100}
+                      </Typography>
+                    </React.Fragment>
                   ) : (
                     <Typography component="h5" variant="h5"
                       style={{ width: '100%', textAlign: 'center' }}>
