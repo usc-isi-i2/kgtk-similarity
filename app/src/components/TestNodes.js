@@ -2,16 +2,19 @@ import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 
 
 const useStyles = makeStyles(theme => ({
-  paper: {
+  wrapper: {
     marginTop: theme.spacing(6),
-    paddingTop: theme.spacing(6),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingBottom: theme.spacing(6),
+  },
+  paper: {
+    paddingTop: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',
@@ -38,13 +41,43 @@ const TestNodes = ({ subject }) => {
 
   const classes = useStyles()
 
-  return (
-    <Paper component="div" square>
-      <Grid container spacing={ 3 }>
-        <Grid item xs={ 12 }>
+  const renderHeader = () => {
+    return (
+      <Grid container spacing={3} className={classes.wrapper}>
+        <Grid item xs={3}>
+        </Grid>
+        <Grid item xs={8}>
+          <Paper component="div"
+            className={classes.paper} square>
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  ComplEx
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  TransE
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  Text
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={1}>
         </Grid>
       </Grid>
-    </Paper>
+    )
+  }
+
+  return (
+    <React.Fragment>
+      {renderHeader()}
+    </React.Fragment>
   )
 }
 
