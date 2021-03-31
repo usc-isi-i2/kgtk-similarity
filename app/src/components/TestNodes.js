@@ -229,6 +229,13 @@ const TestNodes = ({ subject }) => {
     )
   }
 
+  const addSelected = result => {
+    setSelected([
+      ...selected.filter(item => item.qnode !== result.qnode),
+      result,
+    ])
+  }
+
   const renderResults = () => {
     return results.map((result, i) => (
       <Grid key={i} container spacing={3} className={classes.result}>
@@ -240,7 +247,7 @@ const TestNodes = ({ subject }) => {
             { i + 1 }.
           </Typography>
           <Link
-            onClick={event => setSelected([...selected, result])}
+            onClick={event => addSelected(result)}
             className={ classes.link }>
             <Typography
               component="h5"
