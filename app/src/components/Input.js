@@ -1,7 +1,6 @@
-import React from 'react'
-import {
-  TextField,
-} from '@material-ui/core/'
+import React, { useRef } from 'react'
+
+import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 
 
@@ -54,45 +53,26 @@ const CustomTextField = withStyles({
 })(TextField)
 
 
-class Input extends React.Component {
+const Input = ({ autoFocus, label, onChange }) => {
 
-  componentDidMount() {
-    const { passInputRef } = this.props
-    if ( typeof(passInputRef) === 'function' ) {
-      passInputRef(this.input.getElementsByTagName('input')[0])
-    }
+  const inputElement = useRef(null)
+
+  const handleOnChange = event => {
+    onChange(event.target.value)
   }
 
-  handleOnClick() {
-    const { onClick } = this.props
-    if ( onClick ) {
-      this.props.onClick()
-    }
-  }
-
-  handleOnChange(event) {
-    this.props.onChange(event.target.value)
-  }
-
-  render() {
-    const { autoFocus, query, disabled, label, className } = this.props
-    return (
-      <CustomTextField
-        ref={(element) => this.input = element}
-        id={'q'}
-        name={'q'}
-        label={label}
-        value={query}
-        disabled={disabled}
-        autoFocus={autoFocus}
-        autoComplete="off"
-        onClick={this.handleOnClick.bind(this)}
-        onChange={this.handleOnChange.bind(this)}
-        fullWidth
-        className={className}
-      />
-    )
-  }
+  return (
+    <CustomTextField
+      ref={element => inputElement.current = element}
+      id={'q'}
+      name={'q'}
+      label={label}
+      autoFocus={autoFocus}
+      autoComplete="off"
+      fullWidth
+      onChange={event => handleOnChange(event)}
+    />
+  )
 }
 
 
