@@ -120,7 +120,7 @@ const TestNodes = ({ subject }) => {
         }
       })
     })
-  }, [selected])
+  }, [subject.qnode, selected])
 
   const renderHeader = () => {
     return (
