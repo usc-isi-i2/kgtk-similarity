@@ -78,9 +78,9 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     left: 0,
-    bottom: 0,
-    right: '100%',
-    transform: 'right 250ms ease',
+    width: '0%',
+    height: '100%',
+    transition: 'width 250ms ease',
   },
 }))
 
@@ -178,10 +178,12 @@ const TestNodes = ({ subject }) => {
               <Grid item xs={4} key={type}>
                 <Paper component="div"
                   className={classes.paper} square>
+                  <div className={classes.progressBar}
+                    style={{
+                      width: `${Math.round(selected.similarity[type] * 100)}%`
+                  }}></div>
                   {!!selected.similarity[type] ? (
                     <React.Fragment>
-                      <div className={classes.progressBar}
-                        style={{  right: `${100 - Math.round(selected.similarity[type] * 100)}%` }}></div>
                       <Typography component="h5" variant="h5"
                         style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
                         title={selected.similarity[type]}>
