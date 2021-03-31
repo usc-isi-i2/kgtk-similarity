@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -41,6 +41,8 @@ const TestNodes = ({ subject }) => {
 
   const classes = useStyles()
 
+  const [results, setResults] = useState([])
+
   const renderHeader = () => {
     return (
       <Grid container spacing={3} className={classes.wrapper}>
@@ -74,9 +76,14 @@ const TestNodes = ({ subject }) => {
     )
   }
 
+  const renderResults = () => {
+    return results.map(result => {JSON.stringify(result)})
+  }
+
   return (
     <React.Fragment>
       {renderHeader()}
+      {renderResults()}
     </React.Fragment>
   )
 }
