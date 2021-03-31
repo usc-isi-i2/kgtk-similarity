@@ -116,6 +116,51 @@ const TestNodes = ({ subject }) => {
     )
   }
 
+  const renderSelected = () => {
+    return selected.map(selected => (
+      <Grid container spacing={3} className={classes.wrapper}>
+        <Grid item xs={3}>
+          <Typography
+            component="h5"
+            variant="h5"
+            className={ classes.label }>
+            { selected.label[0] } ({ selected.qnode })
+          </Typography>
+          <Typography
+            component="p"
+            variant="body1"
+            className={ classes.description }>
+            <b>Description:</b> { !!selected.description[0] ? selected.description[0] : 'No Description'}
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <Paper component="div"
+            className={classes.paper} square>
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  ComplEx
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  TransE
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
+                  Text
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={1}>
+        </Grid>
+      </Grid>
+    ))
+  }
+
   const submitQuery = query => {
     // Construct the url with correct parameters
     let url = `https://kgtk.isi.edu/api/`
@@ -226,6 +271,7 @@ const TestNodes = ({ subject }) => {
   return (
     <React.Fragment>
       {renderHeader()}
+      {renderSelected()}
       {renderSearch()}
     </React.Fragment>
   )
