@@ -45,9 +45,6 @@ const App = () => {
             }
           },
           '& .MuiInput-input': {
-            '@media (min-width:600px)': {
-              fontSize: '2rem',
-            },
             color: '#fefefe',
             transition: 'background 0.3s ease',
           },

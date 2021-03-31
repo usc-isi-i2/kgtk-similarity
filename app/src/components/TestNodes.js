@@ -163,7 +163,10 @@ const TestNodes = ({ subject }) => {
                 <Paper component="div" className={ classes.paper } square>
                   <Grid container spacing={ 3 }>
                     <Grid item xs={ 12 }>
-                      <Input autoFocus={ true } label={'search to compare q-nodes'}
+                      <Input
+                        fontSize='1.5em'
+                        autoFocus={ true }
+                        label={'search to compare q-nodes'}
                         onChange={query => handleOnChange(query)}/>
                     </Grid>
                   </Grid>

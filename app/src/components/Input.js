@@ -1,10 +1,19 @@
 import React, { useRef } from 'react'
 
 import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 
 
-const Input = ({ autoFocus, label, onChange }) => {
+const useStyles = makeStyles(theme => ({
+  textField: {
+    fontSize: props => props.fontSize || '2em',
+  },
+}))
+
+
+const Input = ({ autoFocus, fontSize, label, onChange }) => {
+
+  const classes = useStyles({fontSize})
 
   const inputElement = useRef(null)
 
@@ -22,6 +31,11 @@ const Input = ({ autoFocus, label, onChange }) => {
       autoComplete="off"
       fullWidth
       onChange={event => handleOnChange(event)}
+      InputProps={{
+        classes: {
+          input: classes.textField,
+        },
+      }}
     />
   )
 }
