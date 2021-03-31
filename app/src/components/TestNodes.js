@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
@@ -36,6 +37,38 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       color: 'rgba(255, 255, 255, 0.5)',
     },
+  },
+  result: {
+    position: 'relative',
+    marginTop: theme.spacing(3),
+  },
+  link: {
+    width: '97%',
+    display: 'inline-block',
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(5),
+    color: '#fefefe',
+    transition: '0.2s background ease',
+    '&:hover': {
+      background: 'rgba(255, 255, 255, 0.1)',
+      textDecoration: 'none',
+      cursor: 'pointer',
+    },
+  },
+  index: {
+    color: '#fefefe',
+    position: 'absolute',
+    top: theme.spacing(2.5),
+    left: theme.spacing(1),
+  },
+  label: {
+    color: '#fefefe',
+    textDecoration: 'underline',
+  },
+  description: {
+    color: '#fefefe',
+    textDecoration: 'none',
+    marginTop: theme.spacing(1),
   },
 }))
 
@@ -80,10 +113,6 @@ const TestNodes = ({ subject }) => {
         </Grid>
       </Grid>
     )
-  }
-
-  const renderResults = () => {
-    return results.map(result => {JSON.stringify(result)})
   }
 
   const submitQuery = query => {
@@ -150,11 +179,49 @@ const TestNodes = ({ subject }) => {
     )
   }
 
+  const renderResults = () => {
+    return results.map((result, i) => (
+      <Grid key={i} container spacing={3} className={classes.result}>
+        <Grid item xs={12}>
+          <Typography
+            component="h5"
+            variant="h5"
+            className={ classes.index }>
+            { i + 1 }.
+          </Typography>
+          <Link
+            className={ classes.link }>
+            <Typography
+              component="h5"
+              variant="h5"
+              className={ classes.label }>
+              { result.label[0] } ({ result.qnode })
+            </Typography>
+            <Typography
+              component="p"
+              variant="body1"
+              className={ classes.description }>
+              <b>Description:</b> { !!result.description[0] ? result.description[0] : 'No Description'}
+            </Typography>
+            { !!result.alias.length ? (
+              <Typography
+                component="p"
+                variant="body1"
+                className={ classes.description }>
+                <b>Alias:</b> { result.alias.join(', ') }
+              </Typography>
+            ) : null }
+          </Link>
+        </Grid>
+      </Grid>
+    ))
+  }
+
   return (
     <React.Fragment>
       {renderHeader()}
-      {renderResults()}
       {renderSearch()}
+      {renderResults()}
     </React.Fragment>
   )
 }
