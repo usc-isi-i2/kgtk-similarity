@@ -14,9 +14,12 @@ const Content = () => {
     <React.Fragment>
       <Header />
       { subject ? (
-        <Subject
-          subject={subject}
-          setSubject={subject => setSubject(subject)} />
+        <React.Fragment>
+          <Subject
+            subject={subject}
+            setSubject={subject => setSubject(subject)} />
+          <TestNodes subject={subject} />
+        </React.Fragment>
       ) : (
         <Search setSubject={subject => setSubject(subject)} />
       )}
