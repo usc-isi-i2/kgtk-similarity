@@ -81,6 +81,7 @@ const TestNodes = ({ subject }) => {
 
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
+  const [selected, setSelected] = useState([])
 
   const renderHeader = () => {
     return (
@@ -194,6 +195,7 @@ const TestNodes = ({ subject }) => {
             { i + 1 }.
           </Typography>
           <Link
+            onClick={event => setSelected([...selected, result])}
             className={ classes.link }>
             <Typography
               component="h5"
