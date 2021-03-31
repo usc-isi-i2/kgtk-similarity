@@ -260,6 +260,7 @@ const TestNodes = ({ subject }) => {
   }
 
   const addSelected = result => {
+    result.similarity = {}
     setSelected([
       ...selected.filter(item => item.qnode !== result.qnode),
       result,
