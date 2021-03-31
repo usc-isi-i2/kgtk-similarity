@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
+import CancelIcon from '@material-ui/icons/Cancel'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 
@@ -31,9 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   cancel: {
     color: 'rgba(255, 255, 255, 0.35)',
-    position: 'absolute',
-    top: theme.spacing(7),
-    right: theme.spacing(5),
+    marginTop: theme.spacing(1),
     transform: 'scale(2)',
     cursor: 'pointer',
     transition: 'all 350ms ease',
@@ -179,7 +179,11 @@ const TestNodes = ({ subject }) => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={1} style={{ textAlign: "center" }}>
+          <IconButton className={classes.cancel}
+            onClick={event => removeSelected(selected)}>
+            <CancelIcon fontSize="large" />
+          </IconButton>
         </Grid>
       </Grid>
     ))
@@ -259,6 +263,10 @@ const TestNodes = ({ subject }) => {
       ...selected.filter(item => item.qnode !== result.qnode),
       result,
     ])
+  }
+
+  const removeSelected = result => {
+    setSelected([...selected.filter(item => item.qnode !== result.qnode)])
   }
 
   const renderResults = () => {
