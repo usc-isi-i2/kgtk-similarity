@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
@@ -8,6 +8,9 @@ import { makeStyles } from '@material-ui/styles'
 
 
 import Input from './Input'
+
+
+const TYPES = ['complex', 'transe', 'text']
 
 
 const useStyles = makeStyles(theme => ({
@@ -82,6 +85,33 @@ const TestNodes = ({ subject }) => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [selected, setSelected] = useState([])
+
+  useEffect(() => {
+    // fetch similarities for this qnode and update
+    selected.forEach(alt => {
+      TYPES.forEach(type => {
+        if ( !alt.similarity[type] ) {
+          let url = `/similarity?q1=${subject.qnode}`
+          url += `&q2=${alt.qnode}`
+          url += `&embedding_type=${type}`
+          return fetch(url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => response.json())
+          .then((results) => {
+            alt.similarity[type] = Math.abs(results.similarity)
+            setSelected([
+              ...selected.filter(item => item.qnode !== alt.qnode),
+              alt,
+            ])
+          })
+        }
+      })
+    })
+  }, [selected])
 
   const renderHeader = () => {
     return (
