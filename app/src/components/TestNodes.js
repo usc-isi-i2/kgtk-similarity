@@ -164,27 +164,27 @@ const TestNodes = ({ subject }) => {
           </Typography>
         </Grid>
         <Grid item xs={8}>
-          <Paper component="div"
-            className={classes.paper} square>
-            <Grid container spacing={3}>
-              {TYPES.map(type => (
-                <Grid item xs={4} key={type}>
+          <Grid container spacing={3}>
+            {TYPES.map(type => (
+              <Grid item xs={4} key={type}>
+                <Paper component="div"
+                  className={classes.paper} square>
                   {!!selected.similarity[type] ? (
                     <Typography component="h5" variant="h5"
-                      style={{ textAlign: 'center', cursor: 'pointer' }}
+                      style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
                       title={selected.similarity[type]}>
                       {Math.round(selected.similarity[type] * 100) / 100}
                     </Typography>
                   ) : (
                     <Typography component="h5" variant="h5"
-                      style={{ textAlign: 'center' }}>
+                      style={{ width: '100%', textAlign: 'center' }}>
                       --
                     </Typography>
                   )}
-                </Grid>
-              ))}
-            </Grid>
-          </Paper>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
         <Grid item xs={1} style={{ textAlign: "center" }}>
           <IconButton className={classes.cancel}
