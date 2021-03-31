@@ -169,11 +169,18 @@ const TestNodes = ({ subject }) => {
             <Grid container spacing={3}>
               {TYPES.map(type => (
                 <Grid item xs={4} key={type}>
-                  <Typography component="h5" variant="h5"
-                    style={{ textAlign: 'center', cursor: 'pointer' }}
-                    title={selected.similarity[type]}>
-                    {Math.round(selected.similarity[type] * 100) / 100}
-                  </Typography>
+                  {!!selected.similarity[type] ? (
+                    <Typography component="h5" variant="h5"
+                      style={{ textAlign: 'center', cursor: 'pointer' }}
+                      title={selected.similarity[type]}>
+                      {Math.round(selected.similarity[type] * 100) / 100}
+                    </Typography>
+                  ) : (
+                    <Typography component="h5" variant="h5"
+                      style={{ textAlign: 'center' }}>
+                      --
+                    </Typography>
+                  )}
                 </Grid>
               ))}
             </Grid>
