@@ -291,7 +291,13 @@ const TestNodes = ({ subject }) => {
   }
 
   const removeSelected = result => {
-    setSelected([...selected.filter(item => item.qnode !== result.qnode)])
+    setSelected([
+      ...selected.filter(item => item.qnode !== result.qnode),
+    ])
+    setResults([
+      result,
+      ...results,
+    ])
   }
 
   const renderResults = () => {
