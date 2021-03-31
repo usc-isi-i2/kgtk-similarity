@@ -5,15 +5,18 @@ import { makeStyles } from '@material-ui/styles'
 
 
 const useStyles = makeStyles(theme => ({
-  textField: {
-    fontSize: props => props.fontSize || '2em',
+  textFieldInput: {
+    fontSize: props => props.fontSize || '2rem',
+  },
+  textFieldLabel: {
+    fontSize: props => props.labelFontSize || '1.25rem',
   },
 }))
 
 
-const Input = ({ autoFocus, fontSize, label, onChange }) => {
+const Input = ({ autoFocus, fontSize, label, labelFontSize, onChange }) => {
 
-  const classes = useStyles({fontSize})
+  const classes = useStyles({fontSize, labelFontSize})
 
   const inputElement = useRef(null)
 
@@ -33,8 +36,11 @@ const Input = ({ autoFocus, fontSize, label, onChange }) => {
       onChange={event => handleOnChange(event)}
       InputProps={{
         classes: {
-          input: classes.textField,
+          input: classes.textFieldInput,
         },
+      }}
+      InputLabelProps={{
+        className: classes.textFieldLabel,
       }}
     />
   )

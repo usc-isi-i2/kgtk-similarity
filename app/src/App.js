@@ -34,15 +34,9 @@ const App = () => {
           color: '#fefefe',
           '& .MuiFormLabel-root': {
             '@media (min-width:600px)': {
-              fontSize: '1.25rem',
               opacity: 0.85,
             },
             color: '#fefefe',
-          },
-          '&.small .MuiFormLabel-root': {
-            '@media (min-width:600px)': {
-              fontSize: '1rem',
-            }
           },
           '& .MuiInput-input': {
             color: '#fefefe',

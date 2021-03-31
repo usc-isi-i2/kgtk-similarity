@@ -165,6 +165,7 @@ const TestNodes = ({ subject }) => {
                     <Grid item xs={ 12 }>
                       <Input
                         fontSize='1.5em'
+                        labelFontSize='1.25em'
                         autoFocus={ true }
                         label={'search to compare q-nodes'}
                         onChange={query => handleOnChange(query)}/>
