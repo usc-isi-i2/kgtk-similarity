@@ -100,7 +100,7 @@ const TestNodes = ({ subject }) => {
     selected.forEach(alt => {
       TYPES.forEach(type => {
         if ( !alt.similarity[type] ) {
-          let url = `/similarity?q1=${subject.qnode}`
+          let url = `/similarity_api?q1=${subject.qnode}`
           url += `&q2=${alt.qnode}`
           url += `&embedding_type=${type}`
           return fetch(url, {
