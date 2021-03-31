@@ -225,7 +225,6 @@ const TestNodes = ({ subject }) => {
     <React.Fragment>
       {renderHeader()}
       {renderSearch()}
-      {renderResults()}
     </React.Fragment>
   )
 }
