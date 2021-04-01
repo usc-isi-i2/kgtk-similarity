@@ -231,7 +231,9 @@ const TestNodes = ({ subject }) => {
       })
       .then((response) => response.json())
       .then((results) => {
-        setResults(results)
+        setResults([
+          ...results.filter(q1 => !selected.find(q2 => q1.qnode === q2.qnode))
+        ])
       })
     }
   }
