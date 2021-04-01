@@ -176,7 +176,7 @@ const TestNodes = ({ subject }) => {
         }
       })
     })
-  }, [subject.qnode, selected])
+  }, [subject.qnode, sortType.value, selected])
 
   const renderHeader = () => {
     return (
