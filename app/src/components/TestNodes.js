@@ -136,6 +136,7 @@ const TestNodes = ({ subject }) => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [selected, setSelected] = useState([])
+  const [sortType, setSortType] = useState(TYPES[0])
 
   useEffect(() => {
     // fetch similarities for this qnode and update
@@ -176,6 +177,7 @@ const TestNodes = ({ subject }) => {
                 <Paper component="div" style={{ alignItems: 'center' }}
                   className={classes.paper} square>
                   <Typography component="h5" variant="h5"
+                    onClick={() => setSortType(type)}
                     className={classes.header}>
                     {type.label}
                     <SortIcon fontSize="large"
