@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Header = ({ subject }) => {
+const Header = ({ subject, download }) => {
 
   const classes = useStyles()
 
@@ -62,6 +62,7 @@ const Header = ({ subject }) => {
         <Typography
           component="h5"
           variant="h5"
+          onClick={download}
           className={ classes.download }>
           Download CSV
           <GetAppIcon fontSize="large" />

@@ -11,9 +11,15 @@ const Content = () => {
   const [subject, setSubject] = useState()
   const [selected, setSelected] = useState([])
 
+  const downloadCSV = () => {
+    console.log('download requested')
+  }
+
   return (
     <React.Fragment>
-      <Header subject={subject} />
+      <Header
+        subject={subject}
+        download={downloadCSV} />
       { subject ? (
         <React.Fragment>
           <Subject
