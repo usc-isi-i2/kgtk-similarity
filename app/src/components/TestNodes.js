@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
+import SortIcon from '@material-ui/icons/Sort'
 import CancelIcon from '@material-ui/icons/Cancel'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -49,6 +50,11 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       color: 'rgba(255, 255, 255, 0.5)',
     },
+  },
+  sortIcon: {
+    marginLeft: theme.spacing(3),
+    verticalAlign: 'bottom',
+    cursor: 'pointer',
   },
   result: {
     position: 'relative',
@@ -155,6 +161,8 @@ const TestNodes = ({ subject }) => {
                   className={classes.paper} square>
                   <Typography component="h5" variant="h5">
                     {type.label}
+                    <SortIcon fontSize="large"
+                      className={classes.sortIcon} />
                   </Typography>
                 </Paper>
               </Grid>
