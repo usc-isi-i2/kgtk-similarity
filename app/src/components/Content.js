@@ -6,6 +6,18 @@ import Subject from './Subject'
 import TestNodes from './TestNodes'
 
 
+const TYPES = [{
+  label: 'ComplEx',
+  value: 'complex',
+}, {
+  label: 'TransE',
+  value: 'transe',
+}, {
+  label: 'Text',
+  value: 'text',
+}]
+
+
 const Content = () => {
 
   const [subject, setSubject] = useState()
@@ -26,6 +38,7 @@ const Content = () => {
             subject={subject}
             setSubject={subject => setSubject(subject)} />
           <TestNodes
+            types={TYPES}
             subject={subject}
             selected={selected}
             setSelected={setSelected}

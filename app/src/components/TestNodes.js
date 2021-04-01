@@ -13,18 +13,6 @@ import { makeStyles } from '@material-ui/styles'
 import Input from './Input'
 
 
-const TYPES = [{
-  label: 'ComplEx',
-  value: 'complex',
-}, {
-  label: 'TransE',
-  value: 'transe',
-}, {
-  label: 'Text',
-  value: 'text',
-}]
-
-
 const useStyles = makeStyles(theme => ({
   headerWrapper: {
     marginTop: theme.spacing(3),
@@ -131,7 +119,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const TestNodes = ({ subject, selected, setSelected }) => {
+const TestNodes = ({ types, subject, selected, setSelected }) => {
 
   const classes = useStyles()
 
@@ -139,7 +127,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
 
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
-  const [sortType, setSortType] = useState(TYPES[0])
+  const [sortType, setSortType] = useState(types[0])
 
   useEffect(() => {
     setSelected([
@@ -153,7 +141,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
   useEffect(() => {
     // fetch similarities for this qnode and update
     selected.forEach(alt => {
-      TYPES.forEach(type => {
+      types.forEach(type => {
         if ( !alt.similarity[type.value] ) {
           let url = `/similarity_api?q1=${subject.qnode}`
           url += `&q2=${alt.qnode}`
@@ -189,7 +177,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
         </Grid>
         <Grid item xs={7}>
           <Grid container spacing={1}>
-            {TYPES.map(type => (
+            {types.map(type => (
               <Grid item xs={4} key={type.value}>
                 <Paper component="div" style={{ alignItems: 'center' }}
                   className={classes.paper} square>
@@ -236,7 +224,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
         </Grid>
         <Grid item xs={7}>
           <Grid container spacing={1}>
-            {TYPES.map(type => (
+            {types.map(type => (
               <Grid item xs={4} key={type.value}>
                 <Paper component="div"
                   className={classes.paper} square>
