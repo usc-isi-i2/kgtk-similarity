@@ -95,6 +95,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     cursor: 'pointer',
     textAlign: 'center',
+    fontWeight: 'bolder',
+    zIndex: '15',
   },
   placeholder: {
     width: '100%',
