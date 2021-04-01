@@ -21,6 +21,15 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     color: '#fefefe',
   },
+  label: {
+    color: '#fefefe',
+    textDecoration: 'underline',
+  },
+  description: {
+    color: '#fefefe',
+    textDecoration: 'none',
+    marginTop: theme.spacing(1),
+  },
   cancel: {
     color: 'rgba(255, 255, 255, 0.35)',
     position: 'absolute',
@@ -42,10 +51,10 @@ const Subject = ({ subject, setSubject }) => {
 
   return (
     <Paper component="div" className={ classes.paper } square>
-      <Typography component="h4" variant="h4">
+      <Typography component="h4" variant="h4" className={classes.label}>
         <b>{ subject.label[0] } ({ subject.qnode })</b>
       </Typography>
-      <Typography component="h5" variant="h5">
+      <Typography component="h5" variant="h5" className={classes.description}>
         { subject.description[0] }
       </Typography>
       <IconButton className={classes.cancel}
