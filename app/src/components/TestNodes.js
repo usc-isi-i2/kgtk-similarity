@@ -180,8 +180,8 @@ const TestNodes = ({ subject }) => {
                     onClick={() => setSortType(type)}
                     className={classes.header}>
                     {type.label}
-                    <SortIcon fontSize="large"
-                      className={classes.sortIcon} />
+                    <SortIcon fontSize="large" className={classes.sortIcon}
+                      style={{ color: !!selected.length && sortType === type ? 'rgba(0, 255, 0, 0.5)' : '#fefefe' }} />
                   </Typography>
                 </Paper>
               </Grid>
