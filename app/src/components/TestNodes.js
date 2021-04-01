@@ -91,6 +91,11 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     transition: 'width 250ms ease',
   },
+  score: {
+    width: '100%',
+    cursor: 'pointer',
+    textAlign: 'center',
+  },
 }))
 
 
@@ -192,7 +197,7 @@ const TestNodes = ({ subject }) => {
                   {!!selected.similarity[type.value] ? (
                     <React.Fragment>
                       <Typography component="h5" variant="h5"
-                        style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
+                        className={classes.score}
                         title={selected.similarity[type.value]}>
                         {Math.round(selected.similarity[type.value] * 100) / 100}
                       </Typography>
