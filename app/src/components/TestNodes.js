@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
   result: {
     position: 'relative',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   link: {
     width: '90%',
@@ -367,7 +367,7 @@ const TestNodes = ({ subject }) => {
 
   const renderResults = () => {
     return results.map((result, i) => (
-      <Grid key={i} container spacing={3} className={classes.result}>
+      <Grid key={i} container spacing={1} className={classes.result}>
         <Grid item xs={12}>
           <Typography
             component="h5"
