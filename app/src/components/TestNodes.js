@@ -144,6 +144,7 @@ const TestNodes = ({ subject }) => {
         return q2.similarity[sortType.value] - q1.similarity[sortType.value]
       })
     ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType])
 
   useEffect(() => {
