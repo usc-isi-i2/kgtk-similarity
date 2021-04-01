@@ -139,6 +139,14 @@ const TestNodes = ({ subject }) => {
   const [sortType, setSortType] = useState(TYPES[0])
 
   useEffect(() => {
+    setSelected([
+      ...selected.sort((q1, q2) => {
+        return q2.similarity[sortType.value] - q1.similarity[sortType.value]
+      })
+    ])
+  }, [sortType])
+
+  useEffect(() => {
     // fetch similarities for this qnode and update
     selected.forEach(alt => {
       TYPES.forEach(type => {
