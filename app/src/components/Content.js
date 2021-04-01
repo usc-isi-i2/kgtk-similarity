@@ -12,7 +12,7 @@ const Content = () => {
 
   return (
     <React.Fragment>
-      <Header />
+      <Header subject={subject} />
       { subject ? (
         <React.Fragment>
           <Subject

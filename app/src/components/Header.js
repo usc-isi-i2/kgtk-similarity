@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Header = () => {
+const Header = ({ subject }) => {
 
   const classes = useStyles()
 
@@ -58,13 +58,15 @@ const Header = () => {
         </a>
         Knowledge Graph Semantic Similarity
       </Typography>
-      <Typography
-        component="h5"
-        variant="h5"
-        className={ classes.download }>
-        Download CSV
-        <GetAppIcon fontSize="large" />
-      </Typography>
+      {!!subject && (
+        <Typography
+          component="h5"
+          variant="h5"
+          className={ classes.download }>
+          Download CSV
+          <GetAppIcon fontSize="large" />
+        </Typography>
+      )}
     </React.Fragment>
   )
 }
