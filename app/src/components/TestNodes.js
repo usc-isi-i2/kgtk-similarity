@@ -186,7 +186,8 @@ const TestNodes = ({ subject }) => {
                   className={classes.paper} square>
                   <div className={classes.progressBar}
                     style={{
-                      width: `${Math.round(selected.similarity[type.value] * 100)}%`
+                      width: `${Math.round(selected.similarity[type.value] * 100)}%`,
+                      backgroundColor: `rgba(${255 - (255 * Math.round(selected.similarity[type.value]))}, ${255 * Math.round(selected.similarity[type.value])}, 0, 0.35)`,
                   }}></div>
                   {!!selected.similarity[type.value] ? (
                     <React.Fragment>
