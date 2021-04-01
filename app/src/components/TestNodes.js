@@ -26,14 +26,17 @@ const TYPES = [{
 
 
 const useStyles = makeStyles(theme => ({
+  headerWrapper: {
+    marginTop: theme.spacing(3),
+  },
   wrapper: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(1),
   },
   paper: {
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',
@@ -43,7 +46,6 @@ const useStyles = makeStyles(theme => ({
   },
   cancel: {
     color: 'rgba(255, 255, 255, 0.35)',
-    marginTop: theme.spacing(1),
     transform: 'scale(2)',
     cursor: 'pointer',
     transition: 'all 350ms ease',
@@ -180,11 +182,11 @@ const TestNodes = ({ subject }) => {
 
   const renderHeader = () => {
     return (
-      <Grid container spacing={3} className={classes.wrapper}>
-        <Grid item xs={3}>
+      <Grid container spacing={1} className={classes.headerWrapper}>
+        <Grid item xs={4}>
         </Grid>
-        <Grid item xs={8}>
-          <Grid container spacing={3}>
+        <Grid item xs={7}>
+          <Grid container spacing={1}>
             {TYPES.map(type => (
               <Grid item xs={4} key={type.value}>
                 <Paper component="div" style={{ alignItems: 'center' }}
@@ -209,8 +211,9 @@ const TestNodes = ({ subject }) => {
 
   const renderSelected = () => {
     return selected.map(selected => (
-      <Grid container spacing={3} className={classes.wrapper} key={selected.qnode}>
-        <Grid item xs={3}>
+      <Grid container spacing={1}
+        className={classes.wrapper} key={selected.qnode}>
+        <Grid item xs={4}>
           <Link
             href={`https://ringgaard.com/kb/${selected.qnode}`}
             target="_blank"
@@ -229,8 +232,8 @@ const TestNodes = ({ subject }) => {
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={8}>
-          <Grid container spacing={3}>
+        <Grid item xs={7}>
+          <Grid container spacing={1}>
             {TYPES.map(type => (
               <Grid item xs={4} key={type.value}>
                 <Paper component="div"
@@ -308,17 +311,17 @@ const TestNodes = ({ subject }) => {
 
   const renderSearch = () => {
     return (
-      <Grid container spacing={3} className={classes.wrapper}>
-        <Grid item xs={3}>
+      <Grid container spacing={1} className={classes.wrapper}>
+        <Grid item xs={4}>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <form className={ classes.form } noValidate
             onSubmit={event => handleSubmit(event)}>
-            <Grid container spacing={ 3 }>
-              <Grid item xs={ 12 }>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
                 <Paper component="div" className={ classes.paper } square>
-                  <Grid container spacing={ 3 }>
-                    <Grid item xs={ 12 }>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
                       <Input
                         fontSize='1.5em'
                         labelFontSize='1.25em'
