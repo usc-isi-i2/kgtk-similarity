@@ -104,7 +104,9 @@ const useStyles = makeStyles(theme => ({
   description: {
     color: '#fefefe',
     textDecoration: 'none',
-    marginTop: theme.spacing(1),
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
   progressBar: {
     backgroundColor: 'rgba(0, 255, 0, 0.35)',
