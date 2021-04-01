@@ -10,11 +10,11 @@ import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(6),
-    paddingTop: theme.spacing(6),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingBottom: theme.spacing(6),
+    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     width: '90%',
     display: 'inline-block',
     padding: theme.spacing(1),
-    marginLeft: theme.spacing(5),
+    marginLeft: theme.spacing(1),
     color: '#fefefe',
     transition: '0.2s background ease',
     '&:hover': {
@@ -47,8 +47,8 @@ const useStyles = makeStyles(theme => ({
   cancel: {
     color: 'rgba(255, 255, 255, 0.35)',
     position: 'absolute',
-    top: theme.spacing(7),
-    right: theme.spacing(5),
+    top: theme.spacing(4.5),
+    right: theme.spacing(4),
     transform: 'scale(2)',
     cursor: 'pointer',
     transition: 'all 350ms ease',

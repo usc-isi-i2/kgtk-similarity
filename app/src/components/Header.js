@@ -9,7 +9,7 @@ import Logo from './Logo'
 const useStyles = makeStyles(theme => ({
   header: {
     color: '#fefefe',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   logo: {
     display: 'inline-block',

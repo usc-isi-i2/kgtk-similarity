@@ -11,11 +11,11 @@ import Input from './Input'
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(6),
-    paddingTop: theme.spacing(6),
+    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(4),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
-    paddingBottom: theme.spacing(6),
+    paddingBottom: theme.spacing(4),
     backgroundColor: 'rgba(254, 254, 254, 0.25)',
     display: 'flex',
     flexDirection: 'column',

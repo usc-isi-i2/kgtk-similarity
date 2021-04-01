@@ -18,7 +18,7 @@ const styles = theme => ({
       background: 'linear-gradient(150deg, #708090, #002133)',
       backgroundAttachment: 'fixed',
       backgroundSize: '100% 150%',
-      padding: theme.spacing(3, 1),
+      padding: theme.spacing(1),
       height: '100vh',
     },
   },
