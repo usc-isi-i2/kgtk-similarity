@@ -128,26 +128,18 @@ const TestNodes = ({ subject }) => {
         <Grid item xs={3}>
         </Grid>
         <Grid item xs={8}>
-          <Paper component="div"
-            className={classes.paper} square>
-            <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
-                  ComplEx
-                </Typography>
+          <Grid container spacing={3}>
+            {TYPES.map(type => (
+              <Grid item xs={4} key={type}>
+                <Paper component="div" style={{ alignItems: 'center' }}
+                  className={classes.paper} square>
+                  <Typography component="h5" variant="h5">
+                    {type}
+                  </Typography>
+                </Paper>
               </Grid>
-              <Grid item xs={4}>
-                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
-                  TransE
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography component="h5" variant="h5" style={{ textAlign: 'center' }}>
-                  Text
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
+            ))}
+          </Grid>
         </Grid>
         <Grid item xs={1}>
         </Grid>
