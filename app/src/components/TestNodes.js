@@ -230,7 +230,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
               component="p"
               variant="body1"
               className={ classes.description }>
-              <b>Description:</b> { !!selected.description[0] ? selected.description[0] : 'No Description'}
+              {!!selected.description[0] ? selected.description[0] : 'No Description'}
             </Typography>
           </Link>
         </Grid>
