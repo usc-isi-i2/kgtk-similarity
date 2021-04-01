@@ -9,6 +9,7 @@ import TestNodes from './TestNodes'
 const Content = () => {
 
   const [subject, setSubject] = useState()
+  const [selected, setSelected] = useState([])
 
   return (
     <React.Fragment>
@@ -18,7 +19,11 @@ const Content = () => {
           <Subject
             subject={subject}
             setSubject={subject => setSubject(subject)} />
-          <TestNodes subject={subject} />
+          <TestNodes
+            subject={subject}
+            selected={selected}
+            setSelected={setSelected}
+          />
         </React.Fragment>
       ) : (
         <Search setSubject={subject => setSubject(subject)} />

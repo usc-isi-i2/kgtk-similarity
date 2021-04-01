@@ -131,7 +131,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const TestNodes = ({ subject }) => {
+const TestNodes = ({ subject, selected, setSelected }) => {
 
   const classes = useStyles()
 
@@ -139,7 +139,6 @@ const TestNodes = ({ subject }) => {
 
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
-  const [selected, setSelected] = useState([])
   const [sortType, setSortType] = useState(TYPES[0])
 
   useEffect(() => {
