@@ -204,7 +204,7 @@ const TestNodes = ({ subject }) => {
 
   const renderSelected = () => {
     return selected.map(selected => (
-      <Grid container spacing={3} className={classes.wrapper}>
+      <Grid container spacing={3} className={classes.wrapper} key={selected.qnode}>
         <Grid item xs={3}>
           <Link
             href={`https://ringgaard.com/kb/${selected.qnode}`}
