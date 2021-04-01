@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import CancelIcon from '@material-ui/icons/Cancel'
 import IconButton from '@material-ui/core/IconButton'
@@ -20,6 +21,19 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'start',
     position: 'relative',
     color: '#fefefe',
+  },
+  link: {
+    width: '90%',
+    display: 'inline-block',
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(5),
+    color: '#fefefe',
+    transition: '0.2s background ease',
+    '&:hover': {
+      background: 'rgba(255, 255, 255, 0.1)',
+      textDecoration: 'none',
+      cursor: 'pointer',
+    },
   },
   label: {
     color: '#fefefe',
@@ -51,12 +65,17 @@ const Subject = ({ subject, setSubject }) => {
 
   return (
     <Paper component="div" className={ classes.paper } square>
-      <Typography component="h4" variant="h4" className={classes.label}>
-        <b>{ subject.label[0] } ({ subject.qnode })</b>
-      </Typography>
-      <Typography component="h5" variant="h5" className={classes.description}>
-        { subject.description[0] }
-      </Typography>
+      <Link
+        href={`https://ringgaard.com/kb/${subject.qnode}`}
+        target="_blank"
+        className={classes.link}>
+        <Typography component="h4" variant="h4" className={classes.label}>
+          <b>{ subject.label[0] } ({ subject.qnode })</b>
+        </Typography>
+        <Typography component="h5" variant="h5" className={classes.description}>
+          { subject.description[0] }
+        </Typography>
+      </Link>
       <IconButton className={classes.cancel}
         onClick={event => setSubject(null)}>
         <CancelIcon fontSize="large" />
