@@ -61,9 +61,9 @@ const useStyles = makeStyles(theme => ({
       transition: 'all 250ms ease',
       transform: 'scale(1.1)',
     },
-    '&:hover $svg': {
+    '&:hover > svg.MuiSvgIcon-root': {
       transition: 'all 250ms ease',
-      color: 'rgba(0, 255, 0, 0.5)',
+      color: 'rgba(0, 255, 0, 0.5) !important',
     },
   },
   sortIcon: {
