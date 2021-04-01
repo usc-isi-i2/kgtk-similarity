@@ -165,8 +165,12 @@ const TestNodes = ({ subject }) => {
           .then((results) => {
             alt.similarity[type.value] = Math.abs(results.similarity)
             setSelected([
-              ...selected.filter(item => item.qnode !== alt.qnode),
-              alt,
+              ...[
+                ...selected.filter(item => item.qnode !== alt.qnode),
+                alt,
+              ].sort((q1, q2) => (
+                q2.similarity[sortType.value] - q1.similarity[sortType.value]
+              ))
             ])
           })
         }
