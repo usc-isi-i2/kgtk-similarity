@@ -96,6 +96,10 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     textAlign: 'center',
   },
+  placeholder: {
+    width: '100%',
+    textAlign: 'center',
+  },
 }))
 
 
@@ -204,7 +208,7 @@ const TestNodes = ({ subject }) => {
                     </React.Fragment>
                   ) : (
                     <Typography component="h5" variant="h5"
-                      style={{ width: '100%', textAlign: 'center' }}>
+                      className={classes.placeholder}>
                       --
                     </Typography>
                   )}
