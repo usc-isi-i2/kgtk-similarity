@@ -179,6 +179,7 @@ const TestNodes = ({ subject, selected, setSelected }) => {
         }
       })
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject.qnode, sortType.value, selected])
 
   const renderHeader = () => {
