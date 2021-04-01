@@ -56,10 +56,14 @@ const useStyles = makeStyles(theme => ({
     userSelect: 'none',
     cursor: 'pointer',
     color: '#fefefe',
-    transition: 'all 250ms ease',
     '&:hover': {
-      color: '#fff',
+      color: 'rgba(0, 255, 0, 0.5)',
+      transition: 'all 250ms ease',
       transform: 'scale(1.1)',
+    },
+    '&:hover $svg': {
+      transition: 'all 250ms ease',
+      color: 'rgba(0, 255, 0, 0.5)',
     },
   },
   sortIcon: {
@@ -67,9 +71,6 @@ const useStyles = makeStyles(theme => ({
     verticalAlign: 'bottom',
     cursor: 'pointer',
     color: '#fefefe',
-    '&:hover': {
-      color: '#fff',
-    },
   },
   result: {
     position: 'relative',
