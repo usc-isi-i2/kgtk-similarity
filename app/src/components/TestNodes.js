@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
   },
   link: {
-    width: '97%',
+    width: '90%',
     display: 'inline-block',
     padding: theme.spacing(1),
     marginLeft: theme.spacing(5),
@@ -159,18 +159,23 @@ const TestNodes = ({ subject }) => {
     return selected.map(selected => (
       <Grid container spacing={3} className={classes.wrapper}>
         <Grid item xs={3}>
-          <Typography
-            component="h5"
-            variant="h5"
-            className={ classes.label }>
-            { selected.label[0] } ({ selected.qnode })
-          </Typography>
-          <Typography
-            component="p"
-            variant="body1"
-            className={ classes.description }>
-            <b>Description:</b> { !!selected.description[0] ? selected.description[0] : 'No Description'}
-          </Typography>
+          <Link
+            href={`https://ringgaard.com/kb/${selected.qnode}`}
+            target="_blank"
+            className={ classes.link }>
+            <Typography
+              component="h5"
+              variant="h5"
+              className={ classes.label }>
+              { selected.label[0] } ({ selected.qnode })
+            </Typography>
+            <Typography
+              component="p"
+              variant="body1"
+              className={ classes.description }>
+              <b>Description:</b> { !!selected.description[0] ? selected.description[0] : 'No Description'}
+            </Typography>
+          </Link>
         </Grid>
         <Grid item xs={8}>
           <Grid container spacing={3}>
