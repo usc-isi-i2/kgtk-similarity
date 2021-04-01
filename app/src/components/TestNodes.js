@@ -51,10 +51,25 @@ const useStyles = makeStyles(theme => ({
       color: 'rgba(255, 255, 255, 0.5)',
     },
   },
+  header: {
+    fontWeight: 'bolder',
+    userSelect: 'none',
+    cursor: 'pointer',
+    color: '#fefefe',
+    transition: 'all 250ms ease',
+    '&:hover': {
+      color: '#fff',
+      transform: 'scale(1.1)',
+    },
+  },
   sortIcon: {
     marginLeft: theme.spacing(3),
     verticalAlign: 'bottom',
     cursor: 'pointer',
+    color: '#fefefe',
+    '&:hover': {
+      color: '#fff',
+    },
   },
   result: {
     position: 'relative',
@@ -159,7 +174,8 @@ const TestNodes = ({ subject }) => {
               <Grid item xs={4} key={type}>
                 <Paper component="div" style={{ alignItems: 'center' }}
                   className={classes.paper} square>
-                  <Typography component="h5" variant="h5">
+                  <Typography component="h5" variant="h5"
+                    className={classes.header}>
                     {type.label}
                     <SortIcon fontSize="large"
                       className={classes.sortIcon} />
