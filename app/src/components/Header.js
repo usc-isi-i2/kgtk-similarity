@@ -1,7 +1,6 @@
 import React from 'react'
 
 import GetAppIcon from '@material-ui/icons/GetApp'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 
@@ -23,6 +22,7 @@ const useStyles = makeStyles(theme => ({
   download: {
     color: '#fefefe',
     cursor: 'pointer',
+    userSelect: 'none',
     position: 'absolute',
     top: theme.spacing(6),
     right: theme.spacing(4),
