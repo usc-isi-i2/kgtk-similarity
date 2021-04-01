@@ -12,7 +12,16 @@ import { makeStyles } from '@material-ui/styles'
 import Input from './Input'
 
 
-const TYPES = ['complex', 'transe', 'text']
+const TYPES = [{
+  label: 'ComplEx',
+  value: 'complex',
+}, {
+  label: 'TransE',
+  value: 'transe',
+}, {
+  label: 'Text',
+  value: 'text',
+}]
 
 
 const useStyles = makeStyles(theme => ({
@@ -99,10 +108,10 @@ const TestNodes = ({ subject }) => {
     // fetch similarities for this qnode and update
     selected.forEach(alt => {
       TYPES.forEach(type => {
-        if ( !alt.similarity[type] ) {
+        if ( !alt.similarity[type.value] ) {
           let url = `/similarity_api?q1=${subject.qnode}`
           url += `&q2=${alt.qnode}`
-          url += `&embedding_type=${type}`
+          url += `&embedding_type=${type.value}`
           return fetch(url, {
             method: 'GET',
             headers: {
@@ -111,7 +120,7 @@ const TestNodes = ({ subject }) => {
           })
           .then((response) => response.json())
           .then((results) => {
-            alt.similarity[type] = Math.abs(results.similarity)
+            alt.similarity[type.value] = Math.abs(results.similarity)
             setSelected([
               ...selected.filter(item => item.qnode !== alt.qnode),
               alt,
@@ -134,7 +143,7 @@ const TestNodes = ({ subject }) => {
                 <Paper component="div" style={{ alignItems: 'center' }}
                   className={classes.paper} square>
                   <Typography component="h5" variant="h5">
-                    {type}
+                    {type.label}
                   </Typography>
                 </Paper>
               </Grid>
@@ -172,19 +181,19 @@ const TestNodes = ({ subject }) => {
         <Grid item xs={8}>
           <Grid container spacing={3}>
             {TYPES.map(type => (
-              <Grid item xs={4} key={type}>
+              <Grid item xs={4} key={type.value}>
                 <Paper component="div"
                   className={classes.paper} square>
                   <div className={classes.progressBar}
                     style={{
-                      width: `${Math.round(selected.similarity[type] * 100)}%`
+                      width: `${Math.round(selected.similarity[type.value] * 100)}%`
                   }}></div>
-                  {!!selected.similarity[type] ? (
+                  {!!selected.similarity[type.value] ? (
                     <React.Fragment>
                       <Typography component="h5" variant="h5"
                         style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}
-                        title={selected.similarity[type]}>
-                        {Math.round(selected.similarity[type] * 100) / 100}
+                        title={selected.similarity[type.value]}>
+                        {Math.round(selected.similarity[type.value] * 100) / 100}
                       </Typography>
                     </React.Fragment>
                   ) : (
