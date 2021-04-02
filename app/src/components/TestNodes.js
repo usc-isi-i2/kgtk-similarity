@@ -154,7 +154,11 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
           })
           .then((response) => response.json())
           .then((results) => {
-            alt.similarity[type.value] = Math.abs(results.similarity)
+            if ( 'error' in results || !results.similarity ) {
+              alt.similarity[type.value] = '--'
+            } else {
+              alt.similarity[type.value] = Math.abs(results.similarity)
+            }
             setSelected([
               ...[
                 ...selected.filter(item => item.qnode !== alt.qnode),
@@ -233,7 +237,8 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                       width: `${Math.round(selected.similarity[type.value] * 100)}%`,
                       backgroundColor: `rgba(${255 - (255 * Math.round(selected.similarity[type.value]))}, ${255 * Math.round(selected.similarity[type.value])}, 0, 0.35)`,
                   }}></div>
-                  {!!selected.similarity[type.value] ? (
+                  {!!selected.similarity[type.value] &&
+                    selected.similarity[type.value] !== '--' ? (
                     <React.Fragment>
                       <Typography component="h5" variant="h5"
                         className={classes.score}
