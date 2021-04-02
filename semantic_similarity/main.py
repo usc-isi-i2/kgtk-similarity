@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 from semantic_similarity.semantic_similarity import SemanticSimilarity
-from k_nearest_neighbors import FAISS_Index
+from semantic_similarity.k_nearest_neighbors import FAISS_Index
 
 
 class QnodeSimilarity(Resource):
