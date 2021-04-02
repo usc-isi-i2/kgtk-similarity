@@ -30,4 +30,4 @@ class NN(Resource):
             return {'error': "The url parameter: 'qnode' required"}
 
         k = int(request.args.get('k', 5))
-        return self.fi.get_neighbors(qnode, get_scores=True, k=k)
+        return self.fi.get_neighbors(qnode, k=k)
