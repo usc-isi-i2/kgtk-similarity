@@ -22,8 +22,6 @@ class FAISS_Index(object):
             self._qnode_to_index = json.load(fd)
         self._index_to_qnode = {v: k for k, v in self._qnode_to_index.items()}
 
-        self._k = k
-
     def get_neighbors(self, qnode: str, get_scores: bool = False, k: int = 5):
         ''' Find the neighbors for the given qnode '''
         scores, candidates = self._index.search(self._index.reconstruct(self._qnode_to_index[qnode]).reshape(1, -1), k)
