@@ -27,7 +27,8 @@ class FAISS_Index(object):
         scores, candidates = self._index.search(self._index.reconstruct(self._qnode_to_index[qnode]).reshape(1, -1), k)
         candidates = [self._index_to_qnode[x] for x in candidates[0] if x != -1]
         scores = scores[0][:len(candidates)]
-
+        scores = [float(x) for x in scores]
+        
         if get_scores:
             return [(c, s) for c, s in zip(candidates, scores)]
         return candidates
