@@ -3,3 +3,14 @@ Flask
 Flask-Cors
 Flask-RESTful
 sklearn
+faiss-cpu
+numpy
+pandas
+h5py
+torch
+torchbiggraph
+torchvision
+tqdm
+scikit-learn
+scipy
+matplotlib
