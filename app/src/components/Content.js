@@ -24,7 +24,24 @@ const Content = () => {
   const [selected, setSelected] = useState([])
 
   const downloadCSV = () => {
-    console.log('download requested')
+    const rows = [
+      ['q1', 'q2', ...TYPES.map(type => type.label)]
+    ]
+    selected.forEach(q2 => {
+      rows.push([subject.qnode, q2.qnode, ...TYPES.map(type => q2.similarity[type.value])])
+    })
+    const csvContent = 'data:text/csv;charset=utf-8,'
+      + rows.map(row => row.join(',')).join('\n')
+
+    const link = document.createElement('a')
+    if (link.download !== undefined) { // feature detection
+      link.setAttribute('href', encodeURI(csvContent))
+      link.setAttribute('download', `${subject.qnode}_similarity.csv`)
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
   }
 
   return (
