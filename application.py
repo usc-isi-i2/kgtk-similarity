@@ -9,8 +9,9 @@ app = Flask(__name__)
 CORS(app)
 
 api = Api(app)
-api.add_resource(QnodeSimilarity, '/similarity')
+
 api.add_resource(NN, '/nearest-neighbors')
+api.add_resource(QnodeSimilarity, '/similarity_api')
 
 if __name__ == '__main__':
     app.run(host=host, port=port)
