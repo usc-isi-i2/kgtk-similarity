@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Header = ({ subject, download }) => {
+const Header = ({ subject, selected, download }) => {
 
   const classes = useStyles()
 
@@ -58,7 +58,7 @@ const Header = ({ subject, download }) => {
         </a>
         Knowledge Graph Semantic Similarity
       </Typography>
-      {!!subject && (
+      {!!subject && !!selected.length && (
         <Typography
           component="h5"
           variant="h5"

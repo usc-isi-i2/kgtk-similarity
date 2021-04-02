@@ -29,6 +29,7 @@ const Content = () => {
     <React.Fragment>
       <Header
         subject={subject}
+        selected={selected}
         download={() => downloadCSV(TYPES, subject, selected)} />
       { subject ? (
         <React.Fragment>
