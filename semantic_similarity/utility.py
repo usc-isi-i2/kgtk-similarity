@@ -43,8 +43,10 @@ class Utility(object):
                 "ids": {
                     "values": qnodes
                 }
-            }
+            },
+            "size": len(qnodes)
         }
+        
         es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_search"
         results = requests.post(es_search_url, json=ids_query).json()
         if "hits" in results:
