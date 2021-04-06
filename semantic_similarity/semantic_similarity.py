@@ -9,6 +9,7 @@ class SemanticSimilarity(object):
     def __init__(self):
         self.config = config
         self.util = Utility()
+        self.embeddings_type = ['complex', 'text', 'transe']
 
     def semantic_similarity(self, q1: str, q2: str, embeddings_type: str):
 
@@ -20,7 +21,7 @@ class SemanticSimilarity(object):
         if q2_result.get('embedding', None) is None:
             return {'error': f"The qnode: {q2} is not present in DWD"}
 
-        if embeddings_type == 'complex' or 'text':
+        if embeddings_type in self.embeddings_type:
             return {
                 'similarity': cosine_similarity(q1_result.get('embedding', None).reshape(1, -1),
                                                 q2_result.get('embedding', None).reshape(1, -1))[0][0],
