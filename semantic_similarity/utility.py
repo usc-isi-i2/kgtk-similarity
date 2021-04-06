@@ -20,7 +20,7 @@ class Utility(object):
         embedding = None
         label = ''
         qnode_dict = {}
-        if '_source' in qnode_result:
+        if '_source' in qnode_result and embeddings_to_index_field[embeddings_type] in qnode_result['_source']:
             embedding = qnode_result['_source'][embeddings_to_index_field[embeddings_type]]
 
             if isinstance(embedding, str):
@@ -46,7 +46,7 @@ class Utility(object):
             },
             "size": len(qnodes)
         }
-        
+
         es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_search"
         results = requests.post(es_search_url, json=ids_query).json()
         if "hits" in results:
