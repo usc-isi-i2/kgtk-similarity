@@ -16,6 +16,6 @@ def call_semantic_similarity(input_file, url):
     return pd.DataFrame(s)
 
 
-url = 'http://localhost:6432/similarity_api?embedding_type=complex'
+url = 'https://dsbox02.isi.edu:8888/qnode-similarity'
 df = call_semantic_similarity('./test_file.tsv', url)
 df.to_csv('test_file_similarity.tsv', index=False, sep='\t')
