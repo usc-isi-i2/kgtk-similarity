@@ -3,12 +3,13 @@ from flask_restful import Resource
 from semantic_similarity.semantic_similarity import SemanticSimilarity
 from semantic_similarity.k_nearest_neighbors import FAISS_Index
 import pandas as pd
-import json
+from semantic_similarity.utility import Utility
 
 
 class QnodeSimilarity(Resource):
     ss = SemanticSimilarity()
     valid_embedding_types = ['complex', 'text', 'transe']
+    utils = Utility()
 
     def get(self):
         q1 = request.args.get('q1', None)
@@ -33,6 +34,12 @@ class QnodeSimilarity(Resource):
 
         df.fillna('', inplace=True)
 
+        all_qnodes = df['q1'].unique().tolist()
+
+        all_qnodes.extend(df['q2'].unique().tolist())
+
+        qnode_label_dict = self.utils.get_labels(all_qnodes)
+
         qnode_truples = list(zip(df.q1, df.q2))
         r = []
         for qnode_truple in qnode_truples:
@@ -40,7 +47,9 @@ class QnodeSimilarity(Resource):
             q2 = qnode_truple[1]
             scores = {
                 'q1': q1,
+                'q1_label': qnode_label_dict.get(q1, ''),
                 'q2': q2,
+                'q2_label': qnode_label_dict.get(q2, ''),
                 'complex': '',
                 'transe': '',
                 'text': ''
