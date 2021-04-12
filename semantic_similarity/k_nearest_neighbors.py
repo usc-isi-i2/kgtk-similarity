@@ -9,20 +9,21 @@ class FAISS_Index(object):
 
     def __init__(self, efSearch: int = 400, nprobe: int = 8):
         self.config = config
-        self._index = faiss.read_index(self.config['faiss_index_file'])
-        self.util = Utility()
-        try:
-            # Set the parameters
-            faiss.downcast_index(self._index.quantizer).hnsw.efSearch = efSearch
-            self._index.nprobe = nprobe
-        except Exception as e:
-            print(e)
-            print('Cannot set parameters for this index')
+        if config['faiss_index_file'] != "":
+            self._index = faiss.read_index(self.config['faiss_index_file'])
+            self.util = Utility()
+            try:
+                # Set the parameters
+                faiss.downcast_index(self._index.quantizer).hnsw.efSearch = efSearch
+                self._index.nprobe = nprobe
+            except Exception as e:
+                print(e)
+                print('Cannot set parameters for this index')
 
-        # Load the entity to index map
-        with open(self.config['qnode_to_ids_file']) as fd:
-            self._qnode_to_index = json.load(fd)
-        self._index_to_qnode = {v: k for k, v in self._qnode_to_index.items()}
+            # Load the entity to index map
+            with open(self.config['qnode_to_ids_file']) as fd:
+                self._qnode_to_index = json.load(fd)
+            self._index_to_qnode = {v: k for k, v in self._qnode_to_index.items()}
 
     def get_neighbors(self, qnode: str, k: int = 5):
         ''' Find the neighbors for the given qnode '''
