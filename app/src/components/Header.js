@@ -3,6 +3,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import GetAppIcon from '@material-ui/icons/GetApp'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import { makeStyles } from '@material-ui/styles'
 
 import Logo from './Logo'
@@ -43,6 +44,10 @@ const Header = ({ subject, selected, download }) => {
 
   const classes = useStyles()
 
+  const refresh = () => {
+    window.location.reload()
+  }
+
   return (
     <Grid container spacing={3} justify="space-between">
       <Grid item>
@@ -62,6 +67,16 @@ const Header = ({ subject, selected, download }) => {
         </Typography>
       </Grid>
       <Grid item>
+        {!!subject && (
+          <Typography
+            component="h5"
+            variant="h5"
+            onClick={refresh}
+            className={classes.button}>
+            Reset
+            <RefreshIcon fontSize="large" />
+          </Typography>
+        )}
         {!!subject && !!selected.length && (
           <Typography
             component="h5"
