@@ -1,6 +1,6 @@
 {
   "es_url": "http://ckg07.isi.edu:9200",
-  "es_index": "wikidatadwd-augmented-02",
+  "es_index": "wikidatadwd-augmented",
   "qnode_to_ids_file": "",
   "faiss_index_file": ""
 }
