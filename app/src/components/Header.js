@@ -20,18 +20,20 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(12),
     marginRight: theme.spacing(2),
   },
-  download: {
+  button: {
     color: '#fefefe',
     cursor: 'pointer',
     userSelect: 'none',
+    display: 'inline-block',
     marginTop: theme.spacing(5),
+    marginLeft: theme.spacing(10),
     '&:hover': {
       textDecoration: 'underline',
     },
     '& svg.MuiSvgIcon-root': {
       color: '#fefefe',
       verticalAlign: 'bottom',
-      marginLeft: theme.spacing(2),
+      marginLeft: theme.spacing(1),
     },
   },
 }))
@@ -60,16 +62,16 @@ const Header = ({ subject, selected, download }) => {
         </Typography>
       </Grid>
       <Grid item>
-      {!!subject && !!selected.length && (
-        <Typography
-          component="h5"
-          variant="h5"
-          onClick={download}
-          className={ classes.download }>
-          Download CSV
-          <GetAppIcon fontSize="large" />
-        </Typography>
-      )}
+        {!!subject && !!selected.length && (
+          <Typography
+            component="h5"
+            variant="h5"
+            onClick={download}
+            className={classes.button}>
+            Download CSV
+            <GetAppIcon fontSize="large" />
+          </Typography>
+        )}
       </Grid>
     </Grid>
   )
