@@ -25,6 +25,13 @@ const Content = () => {
   const [subject, setSubject] = useState()
   const [selected, setSelected] = useState([])
 
+  const updateSubject = newSubject => {
+    setSubject(subject => {
+      setSelected(selected.map(x => ({...x, similarity: {}})))
+      return newSubject
+    })
+  }
+
   return (
     <React.Fragment>
       <Header
@@ -35,7 +42,7 @@ const Content = () => {
         <React.Fragment>
           <Subject
             subject={subject}
-            setSubject={subject => setSubject(subject)} />
+            setSubject={subject => updateSubject(subject)} />
           <TestNodes
             types={TYPES}
             subject={subject}
