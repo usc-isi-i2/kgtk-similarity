@@ -235,7 +235,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                   <div className={classes.progressBar}
                     style={{
                       width: `${Math.round(selected.similarity[type.value] * 100)}%`,
-                      backgroundColor: `rgba(${255 - (255 * Math.round(selected.similarity[type.value]))}, ${255 * Math.round(selected.similarity[type.value])}, 0, 0.35)`,
+                      backgroundColor: `rgba(${255 - (255 * (Math.round(selected.similarity[type.value] * 100) / 100))}, ${255 * (Math.round(selected.similarity[type.value] * 100) / 100)}, 0, ${1 - (0.35 * (Math.round(selected.similarity[type.value] * 100) / 100))})`,
                   }}></div>
                   {!!selected.similarity[type.value] &&
                     selected.similarity[type.value] !== '--' ? (
