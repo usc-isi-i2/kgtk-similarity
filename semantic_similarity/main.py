@@ -8,7 +8,7 @@ from semantic_similarity.utility import Utility
 
 class QnodeSimilarity(Resource):
     ss = SemanticSimilarity()
-    valid_embedding_types = ['complex', 'text', 'transe']
+    valid_embedding_types = ['complex', 'text', 'transe', 'class']
     utils = Utility()
 
     def get(self):
@@ -20,7 +20,7 @@ class QnodeSimilarity(Resource):
             return {'error': "q1, q2 and embedding_type cannot be None"}
 
         if embedding_type not in self.valid_embedding_types:
-            return {'error': "embedding_type should be one of ['complex', 'text', 'transe']"}
+            return {'error': "embedding_type should be one of ['complex', 'text', 'transe', 'class']"}
 
         return self.ss.semantic_similarity(q1, q2, embedding_type)
 

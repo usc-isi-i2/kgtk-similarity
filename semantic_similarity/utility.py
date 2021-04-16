@@ -7,7 +7,8 @@ config = json.load(open('semantic_similarity/config.json'))
 embeddings_to_index_field = {
     "complex": "graph_embedding_complex",
     "text": "text_embedding",
-    "transe": "graph_embeddings_transe"
+    "transe": "graph_embeddings_transe",
+    "class": "class_count"
 }
 
 
@@ -57,3 +58,32 @@ class Utility(object):
                 except:
                     _[hit['_id']] = ''
         return _
+
+    def get_class_counts(self, qnode1: str, qnode2: str) -> (dict, dict):
+        cc_dict = {}
+        labels_dict = {}
+        ids_query = {
+            "_source": ["class_count", "labels.en"],
+            "query": {
+                "ids": {
+                    "values": [qnode1, qnode2]
+                }
+            },
+            "size": 2
+        }
+
+        es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_search"
+        results = requests.post(es_search_url, json=ids_query).json()
+        if "hits" in results:
+            hits = results['hits']['hits']
+            for hit in hits:
+                try:
+                    cc_dict[hit['_id']] = hit['_source']['class_count']
+                except:
+                    cc_dict[hit['_id']] = ''
+
+                try:
+                    labels_dict[hit['_id']] = hit['_source']['labels']['en'][0]
+                except:
+                    labels_dict[hit['_id']] = ''
+        return cc_dict, labels_dict
