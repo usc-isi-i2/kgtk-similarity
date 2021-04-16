@@ -6,7 +6,7 @@ Deployed URL: https://dsbox02.isi.edu:8888
 
 - `q1`: The first qnode for comparison, eg: Q144 (dog)
 - `q2`: The second qnode for comparison. eg: Q146 (house cat)
-- `embedding_type`: type of embedding vector(s) to be used, valid values are [`complex`, `transe`, `text`]
+- `embedding_type`: type of embedding vector(s) to be used, valid values are [`complex`, `transe`, `text`, `class`]
 
 ## Examples
 
@@ -48,6 +48,20 @@ Result:
   "q2_label": "United States of America"
 }
 ```
+
+4. `https://dsbox02.isi.edu:8888/qnode-similarity?q1=Q31&q2=Q142&embedding_type=class`
+
+Result:
+```
+{
+  "similarity": 0.7720331034066785,
+  "q1": "Q142",
+  "q1_label": "France",
+  "q2": "Q31",
+  "q2_label": "Belgium"
+}
+```
+
 # KGTK Semantic Similarity - Call with a file
 
 Deployed URL: `https://dsbox02.isi.edu:8888/qnode-similarity`
