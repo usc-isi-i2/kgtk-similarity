@@ -40,13 +40,21 @@ class SemanticSimilarity(object):
         qnode_class_dict, qnode_labels_dict = self.util.get_class_counts(q1, q2)
         feature_dict, feature_count_dict = self.build_qnode_feature_dict(qnode_class_dict)
         normalized_classes_idf = self.normalize_idf_classes(feature_dict, feature_count_dict)
-        q1_cl = set(feature_dict[q1])
-        q2_cl = set(feature_dict[q2])
-        q1_q2_intersection = q1_cl.intersection(q2_cl)
+        if q1 in feature_dict and q2 in feature_dict:
+            q1_cl = set(feature_dict[q1])
+            q2_cl = set(feature_dict[q2])
+            q1_q2_intersection = q1_cl.intersection(q2_cl)
 
-        _similarity = sum([normalized_classes_idf.get(c) for c in q1_q2_intersection])
+            _similarity = sum([normalized_classes_idf.get(c) for c in q1_q2_intersection])
+            return {
+                'similarity': _similarity,
+                'q1': q1,
+                'q1_label': qnode_labels_dict.get(q1),
+                'q2': q2,
+                'q2_label': qnode_labels_dict.get(q2)
+            }
         return {
-            'similarity': _similarity,
+            'similarity': '',
             'q1': q1,
             'q1_label': qnode_labels_dict.get(q1),
             'q2': q2,
@@ -61,6 +69,7 @@ class SemanticSimilarity(object):
         for qnode in qnode_class_dict:
             feature_val = []
             cl = qnode_class_dict[qnode].split("|")
+
             for c in cl:
                 vals = c.split(":")
                 feature_val.append(vals[0])
