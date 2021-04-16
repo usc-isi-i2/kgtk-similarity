@@ -80,7 +80,7 @@ class Utility(object):
                 try:
                     cc_dict[hit['_id']] = hit['_source']['class_count']
                 except:
-                    cc_dict[hit['_id']] = ''
+                    print('no class_count for: {}'.format(hit['_id']))
 
                 try:
                     labels_dict[hit['_id']] = hit['_source']['labels']['en'][0]
