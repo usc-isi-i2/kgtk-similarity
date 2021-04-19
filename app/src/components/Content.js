@@ -17,6 +17,9 @@ const TYPES = [{
 }, {
   label: 'Text',
   value: 'text',
+}, {
+  label: 'Class',
+  value: 'class',
 }]
 
 
