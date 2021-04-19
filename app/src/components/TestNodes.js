@@ -243,7 +243,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                       <Typography component="h5" variant="h5"
                         className={classes.score}
                         title={selected.similarity[type.value]}>
-                        {Math.round(selected.similarity[type.value] * 100) / 100}
+                        {selected.similarity[type.value].toFixed(3)}
                       </Typography>
                     </React.Fragment>
                   ) : (
