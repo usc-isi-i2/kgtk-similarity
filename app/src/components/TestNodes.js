@@ -182,7 +182,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
         <Grid item xs={7}>
           <Grid container spacing={1}>
             {types.map(type => (
-              <Grid item xs={4} key={type.value}>
+              <Grid item xs={12 / types.length} key={type.value}>
                 <Paper component="div" style={{ alignItems: 'center' }}
                   className={classes.paper} square>
                   <Typography component="h5" variant="h5"
@@ -229,7 +229,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
         <Grid item xs={7}>
           <Grid container spacing={1}>
             {types.map(type => (
-              <Grid item xs={4} key={type.value}>
+              <Grid item xs={12 / types.length} key={type.value}>
                 <Paper component="div"
                   className={classes.paper} square>
                   <div className={classes.progressBar}
