@@ -72,9 +72,9 @@ const Subject = ({ subject, setSubject }) => {
 
   const submitQuery = query => {
     // Construct the url with correct parameters
-    let url = `https://kgtk.isi.edu/api/`
+    let url = `https://kgtk.isi.edu/api`
     if ( query ) {
-      url += `${query}?type=ngram&extra_info=true&language=en&item=qnode`
+      url += `?q=${query}&type=ngram&extra_info=true&language=en&item=qnode`
       return fetch(url, {
         method: 'GET',
         headers: {
