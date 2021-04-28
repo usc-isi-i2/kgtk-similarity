@@ -18,27 +18,28 @@ class SemanticSimilarity(object):
         if embeddings_type == "class":
             return self.compute_class_similarity(q1, q2)
         else:
-            q1_result = self.util.get_embeddings_and_label(q1, embeddings_type)
-            q2_result = self.util.get_embeddings_and_label(q2, embeddings_type)
-            if q1_result.get('embedding', None) is None:
+            qnodes_dict = self.util.get_qnode_details([q1, q2])
+            q1_result = qnodes_dict.get(q1, None)
+            q2_result = qnodes_dict.get(q2, None)
+            if not q1_result or q1_result.get(embeddings_type, None) is None:
                 return {'error': f"The qnode: {q1} is not present in DWD"}
 
-            if q2_result.get('embedding', None) is None:
+            if not q2_result or q2_result.get(embeddings_type, None) is None:
                 return {'error': f"The qnode: {q2} is not present in DWD"}
 
             if embeddings_type in self.embeddings_type:
                 return {
-                    'similarity': cosine_similarity(q1_result.get('embedding', None).reshape(1, -1),
-                                                    q2_result.get('embedding', None).reshape(1, -1))[0][0],
+                    'similarity': cosine_similarity(q1_result.get(embeddings_type).reshape(1, -1),
+                                                    q2_result.get(embeddings_type).reshape(1, -1))[0][0],
                     'q1': q1,
-                    'q1_label': q1_result.get('label'),
+                    'q1_label': q1_result.get('label', ''),
                     'q2': q2,
-                    'q2_label': q2_result.get('label')
+                    'q2_label': q2_result.get('label', '')
                 }
 
     def compute_class_similarity(self, q1, q2):
-        qnode_class_dict, qnode_labels_dict = self.util.get_class_counts(q1, q2)
-        feature_dict, feature_count_dict = self.build_qnode_feature_dict(qnode_class_dict)
+        qnodes_dict = self.util.get_qnode_details([q1, q2])
+        feature_dict, feature_count_dict = self.build_qnode_feature_dict(qnodes_dict)
         normalized_classes_idf = self.normalize_idf_classes(feature_dict, feature_count_dict)
         if q1 in feature_dict and q2 in feature_dict:
             q1_cl = set(feature_dict[q1])
@@ -49,32 +50,33 @@ class SemanticSimilarity(object):
             return {
                 'similarity': _similarity,
                 'q1': q1,
-                'q1_label': qnode_labels_dict.get(q1),
+                'q1_label': qnodes_dict.get(q1, {}).get('label', ''),
                 'q2': q2,
-                'q2_label': qnode_labels_dict.get(q2)
+                'q2_label': qnodes_dict.get(q2, {}).get('label', '')
             }
         return {
             'similarity': '',
             'q1': q1,
-            'q1_label': qnode_labels_dict.get(q1),
+            'q1_label': qnodes_dict.get(q1, {}).get('label', ''),
             'q2': q2,
-            'q2_label': qnode_labels_dict.get(q2)
+            'q2_label': qnodes_dict.get(q2, {}).get('label', '')
         }
 
     @staticmethod
-    def build_qnode_feature_dict(qnode_class_dict: dict) -> (dict, dict):
+    def build_qnode_feature_dict(qnodes_dict: dict) -> (dict, dict):
         feature_dict = {}
         feature_count_dict = {}
 
-        for qnode in qnode_class_dict:
-            feature_val = []
-            cl = qnode_class_dict[qnode].split("|")
+        for qnode in qnodes_dict:
+            if "class" in qnodes_dict[qnode]:
+                feature_val = []
+                cl = qnodes_dict[qnode]['class'].split("|")
 
-            for c in cl:
-                vals = c.split(":")
-                feature_val.append(vals[0])
-                feature_count_dict[vals[0]] = float(vals[1])
-            feature_dict[qnode] = feature_val
+                for c in cl:
+                    vals = c.split(":")
+                    feature_val.append(vals[0])
+                    feature_count_dict[vals[0]] = float(vals[1])
+                feature_dict[qnode] = feature_val
 
         return feature_dict, feature_count_dict
 
