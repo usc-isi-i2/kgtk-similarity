@@ -15,31 +15,12 @@ embeddings_to_index_field = {
 class Utility(object):
     config = config
 
-    def get_embeddings_and_label(self, qnode, embeddings_type):
-        es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_doc/{qnode}"
-        qnode_result = requests.get(es_search_url).json()
-        embedding = None
-        label = ''
-        qnode_dict = {}
-        if '_source' in qnode_result and embeddings_to_index_field[embeddings_type] in qnode_result['_source']:
-            embedding = qnode_result['_source'][embeddings_to_index_field[embeddings_type]]
-
-            if isinstance(embedding, str):
-                embedding = embedding.split(",")
-            embedding = np.array([float(x) for x in embedding])
-
-            _labels = qnode_result['_source']['labels']
-            if 'en' in _labels:
-                label = _labels['en'][0]
-
-        qnode_dict['embedding'] = embedding
-        qnode_dict['label'] = label
-        return qnode_dict
-
-    def get_labels(self, qnodes: List[str]):
-        _ = {}
+    def get_qnode_details(self, qnodes: List[str]) -> dict:
+        source_fields = [embeddings_to_index_field[k] for k in embeddings_to_index_field]
+        source_fields.append("labels.en")
+        qnodes_dict = {}
         ids_query = {
-            "_source": ["labels.en"],
+            "_source": source_fields,
             "query": {
                 "ids": {
                     "values": qnodes
@@ -50,40 +31,29 @@ class Utility(object):
 
         es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_search"
         results = requests.post(es_search_url, json=ids_query).json()
+
         if "hits" in results:
             hits = results['hits']['hits']
             for hit in hits:
-                try:
-                    _[hit['_id']] = hit['_source']['labels']['en'][0]
-                except:
-                    _[hit['_id']] = ''
-        return _
+                qnode = hit['_id']
+                label = ''
+                if qnode not in qnodes_dict:
+                    qnodes_dict[qnode] = {}
+                _source = hit['_source']
+                for k in embeddings_to_index_field:
+                    if embeddings_to_index_field[k] in _source:
+                        if k == "class":
+                            qnodes_dict[qnode][k] = _source[embeddings_to_index_field[k]]
+                        else:
 
-    def get_class_counts(self, qnode1: str, qnode2: str) -> (dict, dict):
-        cc_dict = {}
-        labels_dict = {}
-        ids_query = {
-            "_source": ["class_count", "labels.en"],
-            "query": {
-                "ids": {
-                    "values": [qnode1, qnode2]
-                }
-            },
-            "size": 2
-        }
+                            embedding = _source[embeddings_to_index_field[k]]
+                            if isinstance(embedding, str):
+                                embedding = embedding.split(",")
+                            embedding = np.array([float(x) for x in embedding])
+                            qnodes_dict[qnode][k] = embedding
+                _labels = _source['labels']
+                if 'en' in _labels:
+                    label = _labels['en'][0]
+                qnodes_dict[qnode]['label'] = label
 
-        es_search_url = f"{self.config['es_url']}/{self.config['es_index']}/_search"
-        results = requests.post(es_search_url, json=ids_query).json()
-        if "hits" in results:
-            hits = results['hits']['hits']
-            for hit in hits:
-                try:
-                    cc_dict[hit['_id']] = hit['_source']['class_count']
-                except:
-                    print('no class_count for: {}'.format(hit['_id']))
-
-                try:
-                    labels_dict[hit['_id']] = hit['_source']['labels']['en'][0]
-                except:
-                    labels_dict[hit['_id']] = ''
-        return cc_dict, labels_dict
+        return qnodes_dict
