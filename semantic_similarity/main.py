@@ -38,8 +38,6 @@ class QnodeSimilarity(Resource):
 
         all_qnodes.extend(df['q2'].unique().tolist())
 
-        qnode_label_dict = self.utils.get_labels(all_qnodes)
-
         qnode_truples = list(zip(df.q1, df.q2))
         r = []
         for qnode_truple in qnode_truples:
@@ -47,17 +45,20 @@ class QnodeSimilarity(Resource):
             q2 = qnode_truple[1]
             scores = {
                 'q1': q1,
-                'q1_label': qnode_label_dict.get(q1, ''),
+                'q1_label': '',
                 'q2': q2,
-                'q2_label': qnode_label_dict.get(q2, ''),
+                'q2_label': '',
                 'complex': '',
                 'transe': '',
-                'text': ''
+                'text': '',
+                'class': ''
             }
             for embedding_type in self.valid_embedding_types:
                 _ = self.ss.semantic_similarity(q1, q2, embedding_type)
                 if 'error' not in _:
                     scores[embedding_type] = _['similarity']
+                scores['q1_label'] = _.get('q1_label')
+                scores['q2_label'] = _.get('q2_label')
             r.append(scores)
 
         return r
