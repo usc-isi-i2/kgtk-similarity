@@ -25,29 +25,30 @@ class QnodeSimilarity(Resource):
         return self.ss.semantic_similarity(q1, q2, embedding_type)
 
     def post(self):
+        column1 = request.args.get('column1', "q1")
+        column2 = request.args.get('column2', "q2")
+        add_labels = request.args.get('add_labels', "true").lower() == 'true'
+        file_format = request.args.get('file_type', "tsv")
 
         input_file = request.files.get('file', None)
         if input_file is None:
             return {'error': 'no file provided'}
 
-        df = pd.read_csv(input_file, dtype=object, sep='\t')
+        if file_format == 'tsv':
+            df = pd.read_csv(input_file, dtype=object, sep='\t')
+        else:
+            df = pd.read_csv(input_file, dtype=object)
 
         df.fillna('', inplace=True)
 
-        all_qnodes = df['q1'].unique().tolist()
-
-        all_qnodes.extend(df['q2'].unique().tolist())
-
-        qnode_truples = list(zip(df.q1, df.q2))
+        qnode_truples = list(zip(df[column1], df[column2]))
         r = []
         for qnode_truple in qnode_truples:
             q1 = qnode_truple[0]
             q2 = qnode_truple[1]
             scores = {
-                'q1': q1,
-                'q1_label': '',
-                'q2': q2,
-                'q2_label': '',
+                column1: q1,
+                column2: q2,
                 'complex': '',
                 'transe': '',
                 'text': '',
@@ -57,11 +58,13 @@ class QnodeSimilarity(Resource):
                 _ = self.ss.semantic_similarity(q1, q2, embedding_type)
                 if 'error' not in _:
                     scores[embedding_type] = _['similarity']
-                scores['q1_label'] = _.get('q1_label')
-                scores['q2_label'] = _.get('q2_label')
+                if add_labels:
+                    scores[f'{column1}_label'] = _.get('q1_label')
+                    scores[f'{column2}_label'] = _.get('q2_label')
             r.append(scores)
 
-        return r
+        rdf = pd.DataFrame(r)
+        return df.merge(rdf, on=[column1, column2]).to_json(orient='records')
 
 
 class NN(Resource):
