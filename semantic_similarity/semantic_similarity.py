@@ -12,6 +12,7 @@ class SemanticSimilarity(object):
         self.util = Utility()
         self.embeddings_type = ['complex', 'text', 'transe', 'class']
         self.N = float(42123553)
+        self.all_class_count_dict = json.load(open(config['all_class_count_file_path']))
 
     def semantic_similarity(self, q1: str, q2: str, embeddings_type: str):
 
@@ -62,8 +63,7 @@ class SemanticSimilarity(object):
             'q2_label': qnodes_dict.get(q2, {}).get('label', '')
         }
 
-    @staticmethod
-    def build_qnode_feature_dict(qnodes_dict: dict) -> (dict, dict):
+    def build_qnode_feature_dict(self, qnodes_dict: dict) -> (dict, dict):
         feature_dict = {}
         feature_count_dict = {}
 
@@ -76,6 +76,10 @@ class SemanticSimilarity(object):
                     vals = c.split(":")
                     feature_val.append(vals[0])
                     feature_count_dict[vals[0]] = float(vals[1])
+                if qnode not in feature_val:
+                    feature_val.append(qnode)
+                if qnode not in feature_count_dict:
+                    feature_count_dict[qnode] = self.all_class_count_dict.get(qnode, 1.0)
                 feature_dict[qnode] = feature_val
 
         return feature_dict, feature_count_dict
