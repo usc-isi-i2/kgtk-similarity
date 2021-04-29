@@ -36,7 +36,7 @@ class FAISS_Index(object):
         scores = [float(x) for x in scores][1:]
         candidates = candidates[1:]
 
-        candidates_label_dict = self.util.get_labels(candidates)
+        candidates_label_dict = self.util.get_qnode_details(candidates)
 
         result = []
 
@@ -44,7 +44,7 @@ class FAISS_Index(object):
         for t in tuples:
             _qnode = t[0]
             score = t[1]
-            label = candidates_label_dict.get(_qnode, '')
+            label = candidates_label_dict.get(_qnode, {}).get('label', '')
             result.append({
                 "qnode": _qnode,
                 "score": score,
