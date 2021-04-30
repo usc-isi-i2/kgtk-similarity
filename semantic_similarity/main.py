@@ -4,6 +4,7 @@ from semantic_similarity.semantic_similarity import SemanticSimilarity
 from semantic_similarity.k_nearest_neighbors import FAISS_Index
 import pandas as pd
 from semantic_similarity.utility import Utility
+from semantic_similarity.paths import KGTKPaths
 
 
 class QnodeSimilarity(Resource):
@@ -77,3 +78,16 @@ class NN(Resource):
 
         k = int(request.args.get('k', 5))
         return self.fi.get_neighbors(qnode, k=k)
+
+
+class Paths(Resource):
+    kgp = KGTKPaths()
+
+    def get(self):
+        source = request.args.get("source", None)
+        target = request.args.get("target", None)
+        max_hops = int(request.args.get("hops", 2))
+
+        if source is None or target is None:
+            return {"error": "source and target both required"}
+        return self.kgp.compute_paths(source, target, max_hops=max_hops)
