@@ -36,9 +36,11 @@ class KGTKPaths:
             id_count = 0
             path_id = 0
             id_col = 'name'
-            output = []
+
             source_ids = find_vertex(self.G, prop=self.G.properties[('v', id_col)], match=source_node)
             target_ids = find_vertex(self.G, prop=self.G.properties[('v', id_col)], match=target_node)
+            seen_paths = {}
+
             if len(source_ids) == 1 and len(target_ids) == 1:
                 source_id = source_ids[0]
                 target_id = target_ids[0]
@@ -46,16 +48,18 @@ class KGTKPaths:
                     for edge_num, an_edge in enumerate(path):
                         edge_id = self.G.properties[('e', 'id')][an_edge]
                         node1: str = 'p%d' % path_id
-                        output.append(
-                            {
-                                "node1": node1,
-                                "label": str(edge_num),
-                                "node2": edge_id,
-                                "id": '{}-{}-{}'.format(node1, edge_num, id_count)
-                            }
-                        )
+
+                        if node1 not in seen_paths:
+                            seen_paths[node1] = []
+                        vals = edge_id.split("-")
+                        if edge_num == 0:
+                            seen_paths[node1].append(vals[0])
+
+                        seen_paths[node1].append(vals[1])
+                        seen_paths[node1].append(vals[2])
+
                         id_count += 1
                     path_id += 1
 
-            return output
+            return [seen_paths[k] for k in seen_paths]
         return []
