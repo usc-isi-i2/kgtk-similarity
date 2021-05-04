@@ -90,4 +90,6 @@ class Paths(Resource):
 
         if source is None or target is None:
             return {"error": "source and target both required"}
+        if max_hops > 4:
+            return {"error": "Maximum hops can not be greater than 4"}
         return self.kgp.compute_paths(source, target, max_hops=max_hops)
