@@ -53,9 +53,10 @@ class Utility(object):
                                 embedding = embedding.split(",")
                             embedding = np.array([float(x) for x in embedding])
                             qnodes_dict[qnode][k] = embedding
-                _labels = _source['labels']
-                if 'en' in _labels:
-                    label = _labels['en'][0]
-                qnodes_dict[qnode]['label'] = label
+                if 'labels' in _source:
+                    _labels = _source['labels']
+                    if 'en' in _labels:
+                        label = _labels['en'][0]
+                    qnodes_dict[qnode]['label'] = label
 
         return qnodes_dict
