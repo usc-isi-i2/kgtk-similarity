@@ -87,9 +87,10 @@ class Paths(Resource):
         source = request.args.get("source", None)
         target = request.args.get("target", None)
         max_hops = int(request.args.get("hops", 2))
+        add_labels = request.args.get("labels", "false").strip().lower() == 'true'
 
         if source is None or target is None:
             return {"error": "source and target both required"}
         if max_hops > 4:
             return {"error": "Maximum hops can not be greater than 4"}
-        return self.kgp.compute_paths(source, target, max_hops=max_hops)
+        return self.kgp.compute_paths(source, target, max_hops=max_hops, add_labels=add_labels)
