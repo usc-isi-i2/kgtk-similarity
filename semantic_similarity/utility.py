@@ -15,9 +15,11 @@ embeddings_to_index_field = {
 class Utility(object):
     config = config
 
-    def get_qnode_details(self, qnodes: List[str]) -> dict:
-        source_fields = [embeddings_to_index_field[k] for k in embeddings_to_index_field]
-        source_fields.append("labels.en")
+    def get_qnode_details(self, qnodes: List[str], labels_only=False) -> dict:
+        source_fields = ["labels.en"]
+        if not labels_only:
+            source_fields.extend([embeddings_to_index_field[k] for k in embeddings_to_index_field])
+
         qnodes_dict = {}
         ids_query = {
             "_source": source_fields,
