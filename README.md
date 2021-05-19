@@ -179,3 +179,72 @@ Result:
     }
 ]
 ```
+
+# KGTK Paths
+
+Deployed URL: https://dsbox02.isi.edu:8888
+
+## Parameters
+
+- `source`: The source qnode, start of the path
+- `target`: The target qnode, destination of the path
+- `hops`: Maximum number of hops between source and target qnodes. By default, 2. Maximum allowed: 4.
+
+## Examples
+
+1. `https://dsbox02.isi.edu:8888/paths?source=Q76&target=Q30&hops=2` # Source: Obama, Target: United States
+
+Result:
+```
+  [
+  [
+    "Q76",
+    "P102",
+    "Q29552",
+    "P17",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P102",
+    "Q29552",
+    "P2541",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P103",
+    "Q1860",
+    "P17",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P1038",
+    "Q2856335",
+    "P27",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P108",
+    "Q131252",
+    "P17",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P108",
+    "Q3483312",
+    "P17",
+    "Q30"
+  ],
+  [
+    "Q76",
+    "P108",
+    "Q4537781",
+    "P17",
+    "Q30"
+  ]
+]
+```
