@@ -4,6 +4,8 @@ from graph_tool.all import find_vertex
 from graph_tool.topology import all_paths
 import json
 from pathlib import Path
+from graph_tool.topology import all_shortest_paths
+from semantic_similarity.utility import Utility
 
 config = json.load(open('semantic_similarity/config.json'))
 
@@ -31,7 +33,9 @@ class KGTKPaths:
         else:
             self.G = None
 
-    def compute_paths(self, source_node, target_node, max_hops=2):
+        self.utility = Utility()
+
+    def compute_paths(self, source_node, target_node, max_hops=2, shortest_path=True, add_labels=False):
         if self.G:
             id_count = 0
             path_id = 0
@@ -44,7 +48,12 @@ class KGTKPaths:
             if len(source_ids) == 1 and len(target_ids) == 1:
                 source_id = source_ids[0]
                 target_id = target_ids[0]
-                for path in all_paths(self.G, source_id, target_id, cutoff=max_hops, edges=True):
+                if shortest_path:
+                    _all_paths = all_shortest_paths(self.G, source_id, target_id, edges=True)
+                else:
+                    _all_paths = all_paths(self.G, source_id, target_id, cutoff=max_hops, edges=True)
+
+                for path in _all_paths:
                     for edge_num, an_edge in enumerate(path):
                         edge_id = self.G.properties[('e', 'id')][an_edge]
                         node1: str = 'p%d' % path_id
@@ -61,5 +70,30 @@ class KGTKPaths:
                         id_count += 1
                     path_id += 1
 
-            return [seen_paths[k] for k in seen_paths]
+            qnode_dict = {}
+            if add_labels:
+                all_nodes = set()
+                for p in seen_paths:
+                    _path = seen_paths[p]
+                    for q in _path:
+                        if q.endswith('_'):
+                            q = q[:-1]
+                        all_nodes.add(q)
+                qnode_dict = self.utility.get_qnode_details(list(all_nodes), labels_only=True)
+
+            output = []
+            for k in seen_paths:
+                _path = seen_paths[k]
+                _ = []
+                for x in _path:
+                    if x.endswith('_'):
+                        label = qnode_dict.get(x[:-1], {}).get('label', '')
+                        if label:
+                            label = f'inverse of {label}'
+                    else:
+                        label = qnode_dict.get(x, {}).get('label', '')
+                    _.append(f'{x} ({label})' if add_labels else x)
+                output.append(_)
+
+            return output
         return []
