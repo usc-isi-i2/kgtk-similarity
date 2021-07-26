@@ -1,6 +1,7 @@
 # KGTK Semantic Similarity
 
-Deployed URL: https://dsbox02.isi.edu:8888
+Deployed URL: https://kgtk.isi.edu/similarity_api
+
 
 ## Parameters
 
@@ -10,7 +11,7 @@ Deployed URL: https://dsbox02.isi.edu:8888
 
 ## Examples
 
-1. `https://dsbox02.isi.edu:8888/qnode-similarity?q1=Q144&q2=Q146&embedding_type=complex`
+1. `https://kgtk.isi.edu/similarity_api?q1=Q144&q2=Q146&embedding_type=complex`
 
 Result: 
 ```
@@ -23,7 +24,7 @@ Result:
 }
 ```
 
-2. `https://dsbox02.isi.edu:8888/qnode-similarity?q1=Q144&q2=Q146&embedding_type=text`
+2. `https://https://kgtk.isi.edu/similarity_api?q1=Q144&q2=Q146&embedding_type=text`
 
 Result:
 ```
@@ -36,7 +37,7 @@ Result:
 }
 ```
 
-3. `https://dsbox02.isi.edu:8888/qnode-similarity?q1=Q76&q2=Q30&embedding_type=transe`
+3. `https://kgtk.isi.edu/similarity_api?q1=Q76&q2=Q30&embedding_type=transe`
 
 Result:
 ```
@@ -49,7 +50,7 @@ Result:
 }
 ```
 
-4. `https://dsbox02.isi.edu:8888/qnode-similarity?q1=Q31&q2=Q142&embedding_type=class`
+4. `https://kgtk.isi.edu/similarity_api?q1=Q31&q2=Q142&embedding_type=class`
 
 Result:
 ```
@@ -64,7 +65,7 @@ Result:
 
 # KGTK Semantic Similarity - Call with a file
 
-Deployed URL: `https://dsbox02.isi.edu:8888/qnode-similarity`
+Deployed URL: `https://kgtk.isi.edu/similarity_api`
 
 Users can `POST` a file and get all the three similarity scores back using the following code
 
@@ -87,7 +88,7 @@ def call_semantic_similarity(input_file, url):
     return pd.DataFrame(s)
 
 
-url = 'https://dsbox02.isi.edu:8888/qnode-similarity'
+url = 'https://kgtk.isi.edu/similarity_api'
 df = call_semantic_similarity('./test_file.tsv', url)
 df.to_csv('test_file_similarity.tsv', index=False, sep='\t')
 
