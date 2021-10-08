@@ -9,27 +9,32 @@ from semantic_similarity.paths import KGTKPaths
 
 class QnodeSimilarity(Resource):
     ss = SemanticSimilarity()
-    valid_embedding_types = ['complex', 'text', 'transe', 'class']
+    valid_similarity_types = list(ss.CONFIGURED_SIMILARITY_TYPES.keys())
     utils = Utility()
 
     def get(self):
         q1 = request.args.get('q1', None)
         q2 = request.args.get('q2', None)
-        embedding_type = request.args.get('embedding_type', None)
+        similarity_type = request.args.get('similarity_type', None) or request.args.get('embedding_type', None)
 
-        if q1 is None or q2 is None or embedding_type is None:
-            return {'error': "q1, q2 and embedding_type cannot be None"}
+        if q1 is None or q2 is None or similarity_type is None:
+            return {'error': "q1, q2 and similarity_type cannot be None"}
 
-        if embedding_type not in self.valid_embedding_types:
-            return {'error': "embedding_type should be one of ['complex', 'text', 'transe', 'class']"}
+        if similarity_type not in self.valid_similarity_types:
+            return {'error': f"similarity_type should be one of {self.valid_similarity_types}"}
 
-        return self.ss.semantic_similarity(q1, q2, embedding_type)
+        return self.ss.semantic_similarity(q1, q2, similarity_type)
 
+    # restrict the content one can ask about in a single request:
+    file_max_lines = utils.config.get('file_api_max_lines', 100)
+    
     def post(self):
         column1 = request.args.get('column1', "q1")
         column2 = request.args.get('column2', "q2")
         add_labels = request.args.get('add_labels', "true").lower() == 'true'
         file_format = request.args.get('file_type', "tsv")
+        sim_types = request.args.get('similarity_types', "all").split(',')
+        sim_types = [st for st in self.valid_similarity_types if st in sim_types or 'all' in sim_types]
 
         input_file = request.files.get('file', None)
         if input_file is None:
@@ -44,21 +49,19 @@ class QnodeSimilarity(Resource):
 
         qnode_truples = list(zip(df[column1], df[column2]))
         r = []
-        for qnode_truple in qnode_truples:
+        for i, qnode_truple in enumerate(qnode_truples):
+            if i >= self.file_max_lines:
+                break
             q1 = qnode_truple[0]
             q2 = qnode_truple[1]
             scores = {
                 column1: q1,
                 column2: q2,
-                'complex': '',
-                'transe': '',
-                'text': '',
-                'class': ''
             }
-            for embedding_type in self.valid_embedding_types:
-                _ = self.ss.semantic_similarity(q1, q2, embedding_type)
-                if 'error' not in _:
-                    scores[embedding_type] = _['similarity']
+            for sim_type in sim_types:
+                _ = self.ss.semantic_similarity(q1, q2, sim_type)
+                ok = 'error' not in _
+                scores[sim_type] = _['similarity'] if ok else ''
                 if add_labels:
                     scores[f'{column1}_label'] = _.get('q1_label')
                     scores[f'{column2}_label'] = _.get('q2_label')
@@ -69,15 +72,32 @@ class QnodeSimilarity(Resource):
 
 
 class NN(Resource):
+    ss = SemanticSimilarity()
+    utils = Utility()
+    api_version_1 = utils.api_version_1
     fi = FAISS_Index()
 
+    valid_similarity_types = list(ss.CONFIGURED_SIMILARITY_TYPES.keys())
+    valid_nn_similarity_types = list(ss.CONFIGURED_NN_SIMILARITY_TYPES.keys())
+
+    # restrict the content one can ask about in a single request:
+    nn_api_max_k = utils.config.get('nn_api_max_k', 100)
+    
     def get(self):
         qnode = request.args.get("qnode")
+        similarity_type = request.args.get('similarity_type', self.valid_nn_similarity_types[0])
         if qnode is None:
-            return {'error': "The url parameter: 'qnode' required"}
+            return {'error': "The url parameter: 'qnode' is required"}
+        if similarity_type not in self.valid_nn_similarity_types:
+            if similarity_type not in self.valid_similarity_types:
+                return {'error': f"{similarity_type} is not a valid similarity type"}
+            return {'error': f"{similarity_type} similarity is not currently supported for nearest neighbor requests"}
 
-        k = int(request.args.get('k', 5))
-        return self.fi.get_neighbors(qnode, k=k)
+        k = min(int(request.args.get('k', 5)), self.nn_api_max_k)
+        if self.api_version_1:
+            return self.fi.get_neighbors(qnode, k=k)
+        else:
+            return self.ss.get_most_similar(qnode, similarity_type, topn=k) or []
 
 
 class Paths(Resource):

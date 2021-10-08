@@ -1,6 +1,28 @@
 {
+  "documentation": "config-v2 using DWD v2 and Kypher backend with memory-mapped Numpy embedding files",
   "es_url": "http://ckg07.isi.edu:9200",
   "es_index": "wikidatadwd-augmented",
-  "qnode_to_ids_file": "",
-  "faiss_index_file": ""
+  "qnode_to_ids_file": "resources/qnodes_to_id.json",
+  "faiss_index_file": "resources/wikidata_complEx_faiss.idx",
+  "all_class_count_file_path": "resources/derived.dwd_isa_class_count.compact.json",
+  "input_kgtk_edge_file": "",
+  "api_version": 2,
+  "wikidata_version": "DWD.20210215.v2",
+  "file_api_max_lines": 100,
+  "nn_api_max_k": 100,
+
+  "NODE2VEC_EMBEDDINGS": "resources/word2vec-model-full-128d-mincnt100.dat",
+  "COMPLEX_EMBEDDINGS": "resources/wikidata-20210215-dwd-v2-similarity-embed.2021-10-03T12:14.complex.np.mmap",
+  "TRANSE_EMBEDDINGS": "resources/wikidata-20210215-dwd-v2-similarity-embed.2021-10-03T12:14.transe.np.mmap",
+  "TEXT_EMBEDDINGS": "resources/wikidata-20210215-dwd-v2-similarity-embed.2021-10-03T12:14.text.np.mmap",
+  "COMPLEX_EMB_FAISS_INDEX": "resources/wikidata-20210215-dwd-v2-similarity-embed.2021-10-03T12:14.complexemb.faiss.index.nlist=8192.train=10M.idx",
+    
+  "GRAPH_CACHE": "resources/wikidata-20210215-dwd-v2-similarity-main.2021-10-03T12:02.sqlite3.db",
+  "LRU_CACHE_SIZE": 250000,
+  "KG_CLASS_COUNTS_GRAPH": "classcounts",
+  "KG_CLASS_COUNTS_COMPACT_GRAPH": "classcounts_compact",
+  "KG_NODE2VEC_EMB_NUMIDS_GRAPH": "node2vecemb_numids",
+  "KG_COMPLEX_EMB_NUMIDS_GRAPH": "complexemb_numids",
+  "KG_TRANSE_EMB_NUMIDS_GRAPH": "transeemb_numids",
+  "KG_TEXT_EMB_NUMIDS_GRAPH": "textemb_numids"
 }

@@ -1,17 +1,81 @@
-import json
-from sklearn.metrics.pairwise import cosine_similarity
-from semantic_similarity.utility import Utility
 import math
+import json
+
+from semantic_similarity.utility import Utility, cosine_similarity
+import semantic_similarity.kypher as kypher
+import semantic_similarity.similarity_measures as sm
 
 config = json.load(open('semantic_similarity/config.json'))
 
 
 class SemanticSimilarity(object):
+
+    CONFIGURED_SIMILARITY_TYPES = {
+        'complex': sm.ComplExSimilarity(),
+        'transe':  sm.TransESimilarity(),
+        'text':    sm.TextSimilarity(),
+        'class':   sm.ClassSimilarity(),
+        'jc':      sm.JiangConrathSimilarity(),
+        'topsim':  sm.TopSimSimilarity_2(),
+    }
+    CONFIGURED_NN_SIMILARITY_TYPES = {
+        'complex': sm.ComplExSimilarity(),
+    }
+    
+    def __init__(self):
+        self.config = config
+        self.util = Utility()
+        self.backend = kypher.get_backend()
+
+    def semantic_similarity(self, q1: str, q2: str, similarity_type: str):
+
+        sim = self.CONFIGURED_SIMILARITY_TYPES.get(similarity_type)
+        if not sim:
+            # this mirrors the original behavior for an undefined type:
+            return None
+        
+        # this mirrors the original missing node error detection:
+        qnodes_dict = self.util.get_qnode_details([q1, q2])
+        q1_result = qnodes_dict.get(q1, None)
+        q2_result = qnodes_dict.get(q2, None)
+        is_emb_sim = similarity_type in ('complex', 'text', 'transe')
+        if not q1_result or is_emb_sim and q1_result.get(similarity_type, None) is None:
+            return {'error': f"The qnode: {q1} is not present in DWD"}
+
+        if not q2_result or is_emb_sim and q2_result.get(similarity_type, None) is None:
+            return {'error': f"The qnode: {q2} is not present in DWD"}
+
+        # we use the labels from the ES instance, since they don't contain language tags:
+        return {
+            'similarity': sim.compute_similarity(q1, q2),
+            'q1': q1,
+            'q1_label': q1_result.get('label', ''),
+            'q2': q2,
+            'q2_label': q2_result.get('label', ''),
+        }
+
+    def get_most_similar(self, qnode: str, similarity_type: str, topn: int = 20):
+        sim = self.CONFIGURED_NN_SIMILARITY_TYPES.get(similarity_type)
+        if not sim:
+            return None
+        elif similarity_type == 'complex':
+            # supply poolsize that makes sense for 'complex':
+            return sim.get_most_similar(qnode, topn=topn, poolsize=max(2*topn, 100))
+        else:
+            return sim.get_most_similar(qnode, topn=topn)
+
+
+class SemanticSimilarity_v1(object):
+    """Original semantic similarity entry point.  We keep this for now just in case
+    we need to compare to the old version, even though the new implementation should
+    compute the same numbers for class, complex, transe and text (or very close).
+    """
+    
     def __init__(self):
         self.config = config
         self.util = Utility()
         self.embeddings_type = ['complex', 'text', 'transe', 'class']
-        self.N = float(42123553)
+        self.N = float(42123553)  # TO DO: fix this to get the count from the counts file
         self.all_class_count_dict = json.load(open(config['all_class_count_file_path']))
 
     def semantic_similarity(self, q1: str, q2: str, embeddings_type: str):
