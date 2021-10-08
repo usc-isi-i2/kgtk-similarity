@@ -9,6 +9,15 @@ import downloadCSV from '../utils/download'
 
 
 const TYPES = [{
+  label: 'TopSim',
+  value: 'topsim',
+}, {
+  label: 'Class',
+  value: 'class',
+}, {
+  label: 'JC',
+  value: 'jc',
+}, {
   label: 'ComplEx',
   value: 'complex',
 }, {
@@ -17,9 +26,6 @@ const TYPES = [{
 }, {
   label: 'Text',
   value: 'text',
-}, {
-  label: 'Class',
-  value: 'class',
 }]
 
 
