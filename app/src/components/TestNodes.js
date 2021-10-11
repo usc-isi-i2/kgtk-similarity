@@ -47,13 +47,13 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     color: '#333',
     '&:hover': {
-      color: 'rgba(0, 255, 0, 0.5)',
+      color: 'limegreen',
       transition: 'all 250ms ease',
       transform: 'scale(1.1)',
     },
     '&:hover > svg.MuiSvgIcon-root': {
       transition: 'all 250ms ease',
-      color: 'rgba(0, 255, 0, 0.5) !important',
+      color: 'limegreen !important',
     },
   },
   sortIcon: {
@@ -191,7 +191,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                     className={classes.header}>
                     {type.label}
                     <SortIcon fontSize="large" className={classes.sortIcon}
-                      style={{ color: !!selected.length && sortType === type ? 'rgba(0, 255, 0, 0.5)' : '#333' }} />
+                      style={{ color: !!selected.length && sortType === type ? 'limegreen' : '#333' }} />
                   </Typography>
                 </Paper>
               </Grid>
