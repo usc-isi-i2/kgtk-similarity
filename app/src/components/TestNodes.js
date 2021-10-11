@@ -178,9 +178,9 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   const renderHeader = () => {
     return (
       <Grid container spacing={1} className={classes.headerWrapper}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <Grid container spacing={1}>
             {types.map(type => (
               <Grid item xs={12 / types.length} key={type.value}>
@@ -208,7 +208,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     return selected.map(selected => (
       <Grid container spacing={1}
         className={classes.wrapper} key={selected.qnode}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
           <Link
             href={`https://ringgaard.com/kb/${selected.qnode}`}
             target="_blank"
@@ -227,7 +227,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <Grid container spacing={1}>
             {types.map(type => (
               <Grid item xs={12 / types.length} key={type.value}>
@@ -308,9 +308,9 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   const renderSearch = () => {
     return (
       <Grid container spacing={1} className={classes.wrapper}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <form className={ classes.form } noValidate
             onSubmit={event => handleSubmit(event)}>
             <Grid container spacing={1}>
