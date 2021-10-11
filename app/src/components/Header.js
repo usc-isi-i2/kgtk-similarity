@@ -11,7 +11,7 @@ import Logo from './Logo'
 
 const useStyles = makeStyles(theme => ({
   header: {
-    color: '#fefefe',
+    color: '#333',
     marginTop: theme.spacing(1),
   },
   logo: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   button: {
-    color: '#fefefe',
+    color: '#333',
     cursor: 'pointer',
     userSelect: 'none',
     display: 'inline-block',
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
       textDecoration: 'underline',
     },
     '& svg.MuiSvgIcon-root': {
-      color: '#fefefe',
+      color: '#333',
       verticalAlign: 'bottom',
       marginLeft: theme.spacing(1),
     },

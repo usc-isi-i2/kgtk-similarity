@@ -15,19 +15,19 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    backgroundColor: 'rgba(254, 254, 254, 0.25)',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     position: 'relative',
-    color: '#fefefe',
+    color: '#333',
   },
   link: {
     width: '90%',
     display: 'inline-block',
     padding: theme.spacing(1),
     marginLeft: theme.spacing(1),
-    color: '#fefefe',
+    color: '#333',
     transition: '0.2s background ease',
     '&:hover': {
       background: 'rgba(255, 255, 255, 0.1)',
@@ -36,16 +36,16 @@ const useStyles = makeStyles(theme => ({
     },
   },
   label: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'underline',
   },
   description: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'none',
     marginTop: theme.spacing(1),
   },
   cancel: {
-    color: 'rgba(255, 255, 255, 0.35)',
+    color: 'rgba(0, 0, 0, 0.2)',
     position: 'absolute',
     top: theme.spacing(4.5),
     right: theme.spacing(4),
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     transition: 'all 350ms ease',
     '&:hover': {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(0, 0, 0, 0.35)',
     },
   },
 }))

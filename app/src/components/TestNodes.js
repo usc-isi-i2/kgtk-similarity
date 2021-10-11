@@ -25,42 +25,42 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    backgroundColor: 'rgba(254, 254, 254, 0.25)',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     position: 'relative',
-    color: '#fefefe',
+    color: '#333',
   },
   cancel: {
-    color: 'rgba(255, 255, 255, 0.35)',
+    color: 'rgba(0, 0, 0, 0.2)',
     transform: 'scale(2)',
     cursor: 'pointer',
     transition: 'all 350ms ease',
     '&:hover': {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(0, 0, 0, 0.35)',
     },
   },
   header: {
     fontWeight: 'bolder',
     userSelect: 'none',
     cursor: 'pointer',
-    color: '#fefefe',
+    color: '#333',
     '&:hover': {
-      color: 'rgba(0, 255, 0, 0.5)',
+      color: 'limegreen',
       transition: 'all 250ms ease',
       transform: 'scale(1.1)',
     },
     '&:hover > svg.MuiSvgIcon-root': {
       transition: 'all 250ms ease',
-      color: 'rgba(0, 255, 0, 0.5) !important',
+      color: 'limegreen !important',
     },
   },
   sortIcon: {
     marginLeft: theme.spacing(3),
     verticalAlign: 'bottom',
     cursor: 'pointer',
-    color: '#fefefe',
+    color: '#333',
   },
   result: {
     position: 'relative',
@@ -71,26 +71,27 @@ const useStyles = makeStyles(theme => ({
     display: 'inline-block',
     padding: theme.spacing(1),
     marginLeft: theme.spacing(5),
-    color: '#fefefe',
+    color: '#333',
     transition: '0.2s background ease',
     '&:hover': {
-      background: 'rgba(255, 255, 255, 0.1)',
+      color: '#111',
+      background: 'rgba(253, 214, 0, 0.25)',
       textDecoration: 'none',
       cursor: 'pointer',
     },
   },
   index: {
-    color: '#fefefe',
+    color: '#333',
     position: 'absolute',
     top: theme.spacing(2.5),
     left: theme.spacing(1),
   },
   label: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'underline',
   },
   description: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'none',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -177,9 +178,9 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   const renderHeader = () => {
     return (
       <Grid container spacing={1} className={classes.headerWrapper}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <Grid container spacing={1}>
             {types.map(type => (
               <Grid item xs={12 / types.length} key={type.value}>
@@ -190,7 +191,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                     className={classes.header}>
                     {type.label}
                     <SortIcon fontSize="large" className={classes.sortIcon}
-                      style={{ color: !!selected.length && sortType === type ? 'rgba(0, 255, 0, 0.5)' : '#fefefe' }} />
+                      style={{ color: !!selected.length && sortType === type ? 'limegreen' : '#333' }} />
                   </Typography>
                 </Paper>
               </Grid>
@@ -207,7 +208,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     return selected.map(selected => (
       <Grid container spacing={1}
         className={classes.wrapper} key={selected.qnode}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
           <Link
             href={`https://ringgaard.com/kb/${selected.qnode}`}
             target="_blank"
@@ -226,7 +227,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <Grid container spacing={1}>
             {types.map(type => (
               <Grid item xs={12 / types.length} key={type.value}>
@@ -307,9 +308,9 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   const renderSearch = () => {
     return (
       <Grid container spacing={1} className={classes.wrapper}>
-        <Grid item xs={4}>
+        <Grid item xs={2} sm={3}>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9} sm={8}>
           <form className={ classes.form } noValidate
             onSubmit={event => handleSubmit(event)}>
             <Grid container spacing={1}>

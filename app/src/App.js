@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {
-  withStyles,
   ThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles'
@@ -12,34 +11,32 @@ import Content from './components/Content'
 import ArrowUp from './components/ArrowUp'
 
 
-const styles = theme => ({
-  '@global': {
-    body: {
-      background: 'linear-gradient(150deg, #708090, #002133)',
-      backgroundAttachment: 'fixed',
-      backgroundSize: '100% 150%',
-      padding: theme.spacing(1),
-      height: '100vh',
-    },
-  },
-})
-
-
 const App = () => {
 
   const theme = createMuiTheme({
     overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          html: {
+            WebkitFontSmoothing: 'auto',
+          },
+          body: {
+            background: '#fefefe',
+            color: '#333',
+          },
+        },
+      },
       MuiTextField: {
         root: {
-          color: '#fefefe',
+          color: '#333',
           '& .MuiFormLabel-root': {
             '@media (min-width:600px)': {
               opacity: 0.85,
             },
-            color: '#fefefe',
+            color: '#333',
           },
           '& .MuiInput-input': {
-            color: '#fefefe',
+            color: '#333',
             transition: 'background 0.3s ease',
           },
           '&.small .MuiInput-input': {
@@ -48,20 +45,20 @@ const App = () => {
             }
           },
           '& label.Mui-focused': {
-            color: '#fefefe',
+            color: '#333',
           },
           '&:hover .MuiInput-input': {
             background: 'rgba(255, 255, 255, 0.1)',
           },
           '&:hover .MuiInput-underline:before': {
-            borderBottomColor: '#fefefe',
+            borderBottomColor: '#333',
             borderBottom: '3px solid',
           },
           '& .MuiInput-underline:before': {
-            borderBottomColor: '#fefefe',
+            borderBottomColor: '#333',
           },
           '& .MuiInput-underline:after': {
-            borderBottomColor: '#fefefe',
+            borderBottomColor: '#333',
           },
           '& .MuiInputLabel-shrink': {
             transform: 'translate(0px, -10px)',
@@ -84,4 +81,4 @@ const App = () => {
 }
 
 
-export default withStyles(styles)(App)
+export default App
