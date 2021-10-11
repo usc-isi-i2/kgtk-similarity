@@ -25,12 +25,12 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    backgroundColor: 'rgba(254, 254, 254, 0.25)',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     position: 'relative',
-    color: '#fefefe',
+    color: '#333',
   },
   cancel: {
     color: 'rgba(255, 255, 255, 0.35)',
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bolder',
     userSelect: 'none',
     cursor: 'pointer',
-    color: '#fefefe',
+    color: '#333',
     '&:hover': {
       color: 'rgba(0, 255, 0, 0.5)',
       transition: 'all 250ms ease',
@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(3),
     verticalAlign: 'bottom',
     cursor: 'pointer',
-    color: '#fefefe',
+    color: '#333',
   },
   result: {
     position: 'relative',
@@ -71,26 +71,27 @@ const useStyles = makeStyles(theme => ({
     display: 'inline-block',
     padding: theme.spacing(1),
     marginLeft: theme.spacing(5),
-    color: '#fefefe',
+    color: '#333',
     transition: '0.2s background ease',
     '&:hover': {
-      background: 'rgba(255, 255, 255, 0.1)',
+      color: '#111',
+      background: 'rgba(253, 214, 0, 0.25)',
       textDecoration: 'none',
       cursor: 'pointer',
     },
   },
   index: {
-    color: '#fefefe',
+    color: '#333',
     position: 'absolute',
     top: theme.spacing(2.5),
     left: theme.spacing(1),
   },
   label: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'underline',
   },
   description: {
-    color: '#fefefe',
+    color: '#333',
     textDecoration: 'none',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -190,7 +191,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
                     className={classes.header}>
                     {type.label}
                     <SortIcon fontSize="large" className={classes.sortIcon}
-                      style={{ color: !!selected.length && sortType === type ? 'rgba(0, 255, 0, 0.5)' : '#fefefe' }} />
+                      style={{ color: !!selected.length && sortType === type ? 'rgba(0, 255, 0, 0.5)' : '#333' }} />
                   </Typography>
                 </Paper>
               </Grid>
