@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   cancel: {
-    color: 'rgba(255, 255, 255, 0.35)',
+    color: 'rgba(0, 0, 0, 0.2)',
     position: 'absolute',
     top: theme.spacing(4.5),
     right: theme.spacing(4),
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     transition: 'all 350ms ease',
     '&:hover': {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(0, 0, 0, 0.35)',
     },
   },
 }))

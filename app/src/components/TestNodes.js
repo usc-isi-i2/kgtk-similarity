@@ -33,12 +33,12 @@ const useStyles = makeStyles(theme => ({
     color: '#333',
   },
   cancel: {
-    color: 'rgba(255, 255, 255, 0.35)',
+    color: 'rgba(0, 0, 0, 0.2)',
     transform: 'scale(2)',
     cursor: 'pointer',
     transition: 'all 350ms ease',
     '&:hover': {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(0, 0, 0, 0.35)',
     },
   },
   header: {
