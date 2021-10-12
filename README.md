@@ -17,11 +17,12 @@ The following similarity computations are currently supported:
   lower than more specific classes with lower counts (see below on how
   we count instances).
 
-- jc: an ontology-based measure using our interpretation of the
-  Jiang Conrath ontological distance (see https://arxiv.org/abs/cmp-lg/9709008).
-  We use instance counts (same as used for `class`) to compute probabilities
-  and normalize to the distance through the `entity` node (`Q351201`) to get
-  a similarity.  If a node has multiple most-specific subsumers, the maximum
+- jc: an ontology-based measure using our interpretation of the Jiang
+  Conrath ontological distance (see
+  https://arxiv.org/abs/cmp-lg/9709008).  We use instance counts (same
+  as used for `class`) to compute probabilities and normalize to the
+  distance through the `entity` node (`Q351201`) to get a similarity.
+  If a node pair has multiple most-specific subsumers, the maximum
   similarity based on those will be used.
 
 - complex: an embedding-based measure using 100-dimensional ComplEx
