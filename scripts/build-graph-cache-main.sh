@@ -52,11 +52,11 @@ rclone cat $KGTK_DATA_HOME/$CLAIMS_FILE | zcat | head -n $HEAD | time kgtk --deb
 eval $MEASURE_SPACE
 date
 
-rclone cat $KGTK_DATA_HOME/$LABELS_FILE | zcat | head -n $HEAD | time kgtk --debug query -i - --as labels --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+rclone cat $KGTK_DATA_HOME/$LABELS_FILE | zcat | head -n $HEAD | time kgtk --debug query -i - --as labels --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
 
-rclone cat $KGTK_DATA_HOME/$P279STAR_FILE | zcat | head -n $HEAD | time kgtk --debug query -i - --as p279star --idx mode:unigraph --graph-cache $DWD_CACHE --limit 5
+rclone cat $KGTK_DATA_HOME/$P279STAR_FILE | zcat | head -n $HEAD | time kgtk --debug query -i - --as p279star --idx mode:monograph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
 
@@ -66,13 +66,13 @@ echo 'id	node1	label	node2' > $KGTK_HEADER
 rclone cat $KGTK_DATA_HOME/$CLASS_COUNTS_FILE | zcat | head -n $HEAD | tail -n +2 | cut -f 3 | tr '|' '\n' | sort | uniq \
      | sed -e 's/^/\t/' -e 's/:/\tcount\t/' \
      | cat $KGTK_HEADER - | kgtk add-id -i - \
-     | time kgtk --debug query -i - --as classcounts --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+     | time kgtk --debug query -i - --as classcounts --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
 
 # unfortunately, we also need the compact version for the class sim computation, so another 30+ GB:
 rclone cat $KGTK_DATA_HOME/$CLASS_COUNTS_FILE | zcat | head -n $HEAD | kgtk add-id \
-     | time kgtk --debug query -i - --as classcounts_compact --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+     | time kgtk --debug query -i - --as classcounts_compact --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 
 # TO DO: guard against non-existing numids file:
 zcat $LOCAL_DATA_HOME/$NUMIDS_FILE | head -n $HEAD | time kgtk --debug query -i - --as numids --idx node1 node2 --graph-cache $DWD_CACHE --limit 5

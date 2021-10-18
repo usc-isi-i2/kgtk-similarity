@@ -44,16 +44,16 @@ set -x
 
 # we start with the largest file to have extra room for journal ops:
 rclone cat $KGTK_DATA_HOME/$TEXT_EMB_FILE | zcat | head -n $HEAD | $KGTK_SIM_HOME/scripts/transcode_vectors.py --format kgtk --input-label text_embedding --label emb \
-     | time kgtk --debug query -i - --as textemb --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+     | time kgtk --debug query -i - --as textemb --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
 
 rclone cat $KGTK_DATA_HOME/$COMPLEX_EMB_FILE | head -n $HEAD | $KGTK_SIM_HOME/scripts/transcode_vectors.py --format plain --label emb \
-     | time kgtk --debug query -i - --as complexemb --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+     | time kgtk --debug query -i - --as complexemb --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
 
 rclone cat $KGTK_DATA_HOME/$TRANSE_EMB_FILE | head -n $HEAD | $KGTK_SIM_HOME/scripts/transcode_vectors.py --format plain --label emb \
-     | time kgtk --debug query -i - --as transeemb --idx mode:attgraph --graph-cache $DWD_CACHE --limit 5
+     | time kgtk --debug query -i - --as transeemb --idx mode:valuegraph --graph-cache $DWD_CACHE --limit 5
 eval $MEASURE_SPACE
 date
