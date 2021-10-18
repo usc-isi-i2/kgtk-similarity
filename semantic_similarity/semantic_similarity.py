@@ -35,6 +35,8 @@ class SemanticSimilarity(object):
             return None
         
         # this mirrors the original missing node error detection:
+        # NOTE: it is possible to only get some of the embeddings, e.g., for Q17156448 we get text
+        # but not complex/transe, plus there are about 14M fewer text embeddings than complex/transe:
         qnodes_dict = self.util.get_qnode_details([q1, q2])
         q1_result = qnodes_dict.get(q1, None)
         q2_result = qnodes_dict.get(q2, None)
