@@ -68,6 +68,7 @@ class QnodeSimilarity(Resource):
             r.append(scores)
 
         rdf = pd.DataFrame(r)
+        # TO DO: streamline return type, since this generates a string instead of a dict:
         return df.merge(rdf, on=[column1, column2]).to_json(orient='records')
 
 
