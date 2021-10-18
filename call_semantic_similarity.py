@@ -12,7 +12,9 @@ def call_semantic_similarity(input_file, url):
     }
     resp = requests.post(url, files=files, params={'similarity_types': 'all'})
     
-    s = json.loads(resp.json())
+    s = resp.json()
+    if isinstance(s, str):
+        s = json.loads(s)
     
     return pd.DataFrame(s)
 
