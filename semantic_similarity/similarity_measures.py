@@ -90,6 +90,8 @@ class SimilarityMeasure(object):
         """
         if self.api_version_1:
             return self.compute_pairwise_embedding_similarities([(node, other) for other in others])
+        if not others:
+            return []
         nodeemb = self.backend.get_node_embedding(node, self.embedding_type)
         if nodeemb is None:
             return [0.0] * len(others)
@@ -831,13 +833,9 @@ class TopSimSimilarity_2(TopSimSimilarity):
         super().__init__(*args, **kwdargs)
         self.k = self.DEFAULT_TOP_K if k is None else k
 
-    DEBUG_COMPUTE_SIMILARITY = None
-
     def compute_similarity(self, node1, node2):
         # TO DO: try to make this faster, it is still a bit sluggish
         #        even with all the caching, etc. we do
-        if self.DEBUG_COMPUTE_SIMILARITY is not None:
-            return self.DEBUG_COMPUTE_SIMILARITY(self, node1, node2)
         if node1 == node2:
             return 1.0
         node1_sim = self.get_most_similar(node1)[0:self.k]
