@@ -144,51 +144,6 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType])
 
-  useEffect(() => {
-
-    // selected test nodes have changed
-    // for each test node check if we have the similarity scores
-    // if not, fetch similarity scores for that qnode and update the set
-    selected.forEach(alt => {
-
-      // for each similarity type, check if the test node has the scores already
-      types.forEach(type => {
-
-        if ( !alt.similarity[type.value] ) {
-
-          // fetch similarity score between the subject node and the test node
-          let url = `/similarity_api?q1=${subject.qnode}`
-          url += `&q2=${alt.qnode}`
-          url += `&embedding_type=${type.value}`
-          return fetch(url, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          .then((response) => response.json())
-          .then((results) => {
-            if ( 'error' in results || !results.similarity ) {
-              alt.similarity[type.value] = '--'
-            } else {
-              alt.similarity[type.value] = Math.abs(results.similarity)
-            }
-            setSelected([
-              ...[
-                ...selected.filter(item => item.qnode !== alt.qnode),
-                alt,
-              ].sort((q1, q2) => (
-                q2.similarity[sortType.value] - q1.similarity[sortType.value]
-              ))
-            ])
-          })
-        }
-      })
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject.qnode, sortType.value, selected])
-
   const renderHeader = () => {
     return (
       <Grid container spacing={1} className={classes.headerWrapper}>
@@ -370,6 +325,42 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     setResults([
       ...results.filter(item => item.qnode !== result.qnode),
     ])
+
+    // fetch all similarity scores for this node from the similarity api
+    types.forEach(type => {
+
+      // fetch similarity score between the subject node and the test node
+      let url = `/similarity_api?q1=${subject.qnode}`
+      url += `&q2=${result.qnode}`
+      url += `&embedding_type=${type.value}`
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => response.json())
+      .then((results) => {
+        const similarityScore = {type: type.value}
+        if ( 'error' in results || !results.similarity ) {
+          result.similarity[similarityScore.type] = '--'
+        } else {
+          result.similarity[similarityScore.type] = Math.abs(results.similarity)
+        }
+
+        // Update test node similarity scores
+        // Sort test nodes to make sure most similar node is at the top
+        setSelected(prevSelected => {
+          const selected = [...prevSelected]
+          return [
+            ...selected.filter(item => item.qnode !== result.qnode),
+            result,
+          ].sort((q1, q2) => {
+            return q2.similarity[sortType.value] - q1.similarity[sortType.value]
+          })
+        })
+      })
+    })
   }
 
   const removeSelected = result => {
