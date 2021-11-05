@@ -66,7 +66,7 @@ const Subject = ({ subject, setSubject }) => {
   return (
     <Paper component="div" className={ classes.paper } square>
       <Link
-        href={`https://ringgaard.com/kb/${subject.qnode}`}
+        href={`https://kgtk.isi.edu/browser/${subject.qnode}`}
         target="_blank"
         className={classes.link}>
         <Typography component="h4" variant="h4" className={classes.label}>

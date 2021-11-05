@@ -210,7 +210,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
         className={classes.wrapper} key={selected.qnode}>
         <Grid item xs={2} sm={3}>
           <Link
-            href={`https://ringgaard.com/kb/${selected.qnode}`}
+            href={`https://kgtk.isi.edu/browser/${selected.qnode}`}
             target="_blank"
             className={ classes.link }>
             <Typography
