@@ -131,19 +131,32 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   const [sortType, setSortType] = useState(types[0])
 
   useEffect(() => {
+    // user selected a different similarity type to sort with
+    // we need to update the order of the selected test nodes
     setSelected([
+
+      // sort the selected test nodes using the selected sort type
       ...selected.sort((q1, q2) => {
         return q2.similarity[sortType.value] - q1.similarity[sortType.value]
       })
     ])
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType])
 
   useEffect(() => {
-    // fetch similarities for this qnode and update
+
+    // selected test nodes have changed
+    // for each test node check if we have the similarity scores
+    // if not, fetch similarity scores for that qnode and update the set
     selected.forEach(alt => {
+
+      // for each similarity type, check if the test node has the scores already
       types.forEach(type => {
+
         if ( !alt.similarity[type.value] ) {
+
+          // fetch similarity score between the subject node and the test node
           let url = `/similarity_api?q1=${subject.qnode}`
           url += `&q2=${alt.qnode}`
           url += `&embedding_type=${type.value}`
@@ -172,6 +185,7 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
         }
       })
     })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject.qnode, sortType.value, selected])
 
@@ -339,20 +353,32 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
   }
 
   const addSelected = result => {
+    // add similarity dictionary to add the scores
     result.similarity = {}
+
+    // add item to the list of selected test nodes
     setSelected([
+
+      // make sure item is not already added to the list
       ...selected.filter(item => item.qnode !== result.qnode),
+
+      // append item to the end of the list
       result,
     ])
+
+    // remove selected item from the search results
     setResults([
       ...results.filter(item => item.qnode !== result.qnode),
     ])
   }
 
   const removeSelected = result => {
+    // remove item from the list of selected test nodes
     setSelected([
       ...selected.filter(item => item.qnode !== result.qnode),
     ])
+
+    // add item back to the search results
     setResults([
       result,
       ...results,
