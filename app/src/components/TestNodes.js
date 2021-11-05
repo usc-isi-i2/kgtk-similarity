@@ -144,6 +144,21 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType])
 
+  useEffect(() => {
+
+    // the main subject changed and we need to recalculate similarity scores
+    // for each test node fetch the new similarity scores
+    selected.forEach((alt, index) => {
+      // delay calls to the similarity api in order to prevent
+      // hitting the api too many times too quickly
+      setTimeout(() => {
+        updateSimilarityScores(alt)
+      }, 1000 * index)
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subject.qnode])
+
   const renderHeader = () => {
     return (
       <Grid container spacing={1} className={classes.headerWrapper}>
