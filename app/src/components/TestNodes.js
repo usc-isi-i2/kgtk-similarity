@@ -307,6 +307,44 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
     )
   }
 
+  const updateSimilarityScores = node => {
+    // fetch all similarity scores for this node from the similarity api
+    types.forEach(type => {
+
+      // fetch similarity score between the subject node and the test node
+      let url = `/similarity_api?q1=${subject.qnode}`
+      url += `&q2=${node.qnode}`
+      url += `&embedding_type=${type.value}`
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => response.json())
+      .then((results) => {
+        const similarityScore = {type: type.value}
+        if ( 'error' in results || !results.similarity ) {
+          node.similarity[similarityScore.type] = '--'
+        } else {
+          node.similarity[similarityScore.type] = Math.abs(results.similarity)
+        }
+
+        // Update test node similarity scores
+        // Sort test nodes to make sure most similar node is at the top
+        setSelected(prevSelected => {
+          const selected = [...prevSelected]
+          return [
+            ...selected.filter(item => item.qnode !== node.qnode),
+            node,
+          ].sort((q1, q2) => {
+            return q2.similarity[sortType.value] - q1.similarity[sortType.value]
+          })
+        })
+      })
+    })
+  }
+
   const addSelected = result => {
     // add similarity dictionary to add the scores
     result.similarity = {}
@@ -326,41 +364,8 @@ const TestNodes = ({ types, subject, selected, setSelected }) => {
       ...results.filter(item => item.qnode !== result.qnode),
     ])
 
-    // fetch all similarity scores for this node from the similarity api
-    types.forEach(type => {
-
-      // fetch similarity score between the subject node and the test node
-      let url = `/similarity_api?q1=${subject.qnode}`
-      url += `&q2=${result.qnode}`
-      url += `&embedding_type=${type.value}`
-      return fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => response.json())
-      .then((results) => {
-        const similarityScore = {type: type.value}
-        if ( 'error' in results || !results.similarity ) {
-          result.similarity[similarityScore.type] = '--'
-        } else {
-          result.similarity[similarityScore.type] = Math.abs(results.similarity)
-        }
-
-        // Update test node similarity scores
-        // Sort test nodes to make sure most similar node is at the top
-        setSelected(prevSelected => {
-          const selected = [...prevSelected]
-          return [
-            ...selected.filter(item => item.qnode !== result.qnode),
-            result,
-          ].sort((q1, q2) => {
-            return q2.similarity[sortType.value] - q1.similarity[sortType.value]
-          })
-        })
-      })
-    })
+    // fetch similarity scores
+    updateSimilarityScores(result)
   }
 
   const removeSelected = result => {
