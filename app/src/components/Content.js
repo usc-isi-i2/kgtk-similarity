@@ -47,7 +47,9 @@ const Content = () => {
         subject={subject}
         selected={selected}
         download={() => downloadCSV(TYPES, subject, selected)} />
-      { subject ? (
+      { !subject ? (
+        <Search setSubject={subject => setSubject(subject)} />
+      ) : (
         <React.Fragment>
           <Subject
             subject={subject}
@@ -59,8 +61,6 @@ const Content = () => {
             setSelected={setSelected}
           />
         </React.Fragment>
-      ) : (
-        <Search setSubject={subject => setSubject(subject)} />
       )}
     </React.Fragment>
   )
