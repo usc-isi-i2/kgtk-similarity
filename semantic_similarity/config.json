@@ -8,8 +8,10 @@
   "input_kgtk_edge_file": "",
   "api_version": 2,
   "wikidata_version": "DWD.20210215.v2",
-  "file_api_max_lines": 100,
+  "file_api_max_lines": 25,
   "nn_api_max_k": 100,
+  "topsim_max_onto_neighbors": 10000,
+  "debug_requests": false,
 
   "NODE2VEC_EMBEDDINGS": "resources/word2vec-model-full-128d-mincnt100.dat",
   "COMPLEX_EMBEDDINGS": "resources/wikidata-20210215-dwd-v2-similarity-embed.2021-10-03T12:14.complex.np.mmap",
