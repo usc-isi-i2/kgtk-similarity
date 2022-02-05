@@ -11,6 +11,7 @@ class QnodeSimilarity(Resource):
     ss = SemanticSimilarity()
     valid_similarity_types = list(ss.CONFIGURED_SIMILARITY_TYPES.keys())
     utils = Utility()
+    debug_requests = utils.config.get('debug_requests', False)
 
     def get(self):
         q1 = request.args.get('q1', None)
@@ -23,6 +24,8 @@ class QnodeSimilarity(Resource):
         if similarity_type not in self.valid_similarity_types:
             return {'error': f"similarity_type should be one of {self.valid_similarity_types}"}
 
+        if self.debug_requests:
+            print(f'QnodeSimilarity.get: {q1} {q2} {similarity_type}')
         return self.ss.semantic_similarity(q1, q2, similarity_type)
 
     # restrict the content one can ask about in a single request:
@@ -46,6 +49,8 @@ class QnodeSimilarity(Resource):
             df = pd.read_csv(input_file, dtype=object)
 
         df.fillna('', inplace=True)
+        if self.debug_requests:
+            print(f'QnodeSimilarity.post: {sim_types} {df}')
 
         qnode_truples = list(zip(df[column1], df[column2]))
         r = []
@@ -83,6 +88,7 @@ class NN(Resource):
 
     # restrict the content one can ask about in a single request:
     nn_api_max_k = utils.config.get('nn_api_max_k', 100)
+    debug_requests = utils.config.get('debug_requests', False)
     
     def get(self):
         qnode = request.args.get("qnode")
@@ -93,6 +99,9 @@ class NN(Resource):
             if similarity_type not in self.valid_similarity_types:
                 return {'error': f"{similarity_type} is not a valid similarity type"}
             return {'error': f"{similarity_type} similarity is not currently supported for nearest neighbor requests"}
+            
+        if self.debug_requests:
+            print(f'NN.get: {qnode} {similarity_type}')
 
         k = min(int(request.args.get('k', 5)), self.nn_api_max_k)
         if self.api_version_1:
