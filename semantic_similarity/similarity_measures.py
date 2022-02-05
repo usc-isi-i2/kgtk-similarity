@@ -748,6 +748,9 @@ class TopSimSimilarity(SimilarityMeasure):
         self.complex = ComplExSimilarity()
         self.n2v = Node2VecSimilarity()
 
+    # 99.4% of WD top-200k classes (by pagerank) have <= 10,000 onto-neighbors:
+    max_onto_neighbors = config.get('topsim_max_onto_neighbors', 10000)
+
     @lru_cache(maxsize=config['LRU_CACHE_SIZE']) # thread-safe according to source
     def generate_candidates(self, nodes):
         # TO DO: handle redirects such as "order (Q567696) (redirected from Q24073594)"
@@ -755,6 +758,11 @@ class TopSimSimilarity(SimilarityMeasure):
         candidates = []
         for node in [nodes] if isinstance(nodes, str) else nodes:
             onto_neighbors = self.backend.get_node_neighbors(node, maxup=self.maxup, maxdown=self.maxdown)
+            # KLUDGE: for some classes such as 'protein' we might get very large neighborhoods (80k nodes),
+            # so temporarily we just randomly pick a subset, however, something better needs to be done -
+            # e.g., picking a subset based on pagerank, for example:
+            if len(onto_neighbors) > self.max_onto_neighbors:
+                onto_neighbors = set(list(onto_neighbors)[0:self.max_onto_neighbors])
             n2v_neigbors = self.n2v.get_most_similar(node, topn=self.firstn)
             # reducing poolsize to 2*firstn to reduce compute time:
             complex_neigbors = self.complex.get_most_similar(node, topn=self.firstn, poolsize=2 * self.firstn)
