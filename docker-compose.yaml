@@ -1,0 +1,21 @@
+version: "3"
+services:
+  kgtk-browser:
+    image: kgtk-similarity
+    command: sh -c "python application.py"
+    container_name: kgtk-similarity
+    restart: always
+    ports:
+      - "6433:6433"
+    volumes:
+      - /kgtk-similarity-resources:/src/resources
+    environment:
+      - FLASK_ENV=production
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+networks:
+  default:
+    external:
+      name: overlay

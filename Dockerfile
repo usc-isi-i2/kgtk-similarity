@@ -1,13 +1,38 @@
-FROM ubuntu:18.04
+# A dockerfile for running the kgtk-similarity
+# python 3.9.7 is a KGTK requirement
+# this comes with a debian version 11 (bullseye)
+FROM python:3.9.7
 
-ADD . /api
+# Add graph-tool repository to the list of known apt sources
+RUN echo "deb [ arch=amd64 ] https://downloads.skewed.de/apt bullseye main" >> /etc/apt/sources.list
 
-WORKDIR /api
+# Fetch the public key in order to verify graph-tool
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key 612DEFB798507F25
 
-RUN apt-get update \
-  && apt-get install -y python3-pip python3-dev \
-  && cd /usr/local/bin \
-  && ln -s /usr/bin/python3 python \
-  && pip3 install --upgrade pip
+# update the registry
+RUN apt-get update
 
-RUN pip3 install -r requirements.txt
+# install graph-tool library for kgtk
+RUN apt-get install python3-graph-tool -y
+
+# install sqlite3 database
+RUN apt-get install sqlite3 -y
+
+RUN mkdir /src
+
+COPY requirements.txt /src/requirements.txt
+
+RUN pip install -r /src/requirements.txt
+
+COPY app_config.py /src/
+COPY application.py /src/
+COPY semantic_similarity/ /src/semantic_similarity
+COPY app/ /src/app/
+
+ARG FLASK_ENV=production
+ENV FLASK_ENV=$FLASK_ENV
+
+ARG KGTK_SIMILARITY_CONFIG=semantic_similarity/config.json
+ENV KGTK_SIMILARITY_CONFIG=$KGTK_SIMILARITY_CONFIG
+
+WORKDIR /src

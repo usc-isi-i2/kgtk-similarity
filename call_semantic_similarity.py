@@ -19,5 +19,5 @@ def call_semantic_similarity(input_file, url):
     return pd.DataFrame(s)
 
 url = 'https://kgtk.isi.edu/similarity_api'
-df = call_semantic_similarity('test_file.tsv', url)
+df = call_semantic_similarity('issue_4.tsv', url)
 df.to_csv('test_file_similarity.tsv', index=False, sep='\t')

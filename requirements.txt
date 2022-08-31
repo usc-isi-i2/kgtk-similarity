@@ -15,4 +15,4 @@ scikit-learn
 scipy
 matplotlib
 gensim
-git+https://github.com/usc-isi-i2/kgtk.git@dev#egg=kgtk
+kgtk
