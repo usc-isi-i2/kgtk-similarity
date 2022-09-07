@@ -4,24 +4,27 @@ import json
 from semantic_similarity.utility import Utility, cosine_similarity
 import semantic_similarity.kypher as kypher
 import semantic_similarity.similarity_measures as sm
+import os
 
-config = json.load(open('semantic_similarity/config.json'))
+if 'KGTK_SIMILARITY_CONFIG' in os.environ and os.environ['KGTK_SIMILARITY_CONFIG'] is not None:
+    config = os.environ['KGTK_SIMILARITY_CONFIG']
+else:
+    config = json.load(open('semantic_similarity/config.json'))
 
 
 class SemanticSimilarity(object):
-
     CONFIGURED_SIMILARITY_TYPES = {
         'complex': sm.ComplExSimilarity(),
-        'transe':  sm.TransESimilarity(),
-        'text':    sm.TextSimilarity(),
-        'class':   sm.ClassSimilarity(),
-        'jc':      sm.JiangConrathSimilarity(),
-        'topsim':  sm.TopSimSimilarity_2(),
+        'transe': sm.TransESimilarity(),
+        'text': sm.TextSimilarity(),
+        'class': sm.ClassSimilarity(),
+        'jc': sm.JiangConrathSimilarity(),
+        'topsim': sm.TopSimSimilarity_2(),
     }
     CONFIGURED_NN_SIMILARITY_TYPES = {
         'complex': sm.ComplExSimilarity(),
     }
-    
+
     def __init__(self):
         self.config = config
         self.util = Utility()
@@ -33,7 +36,7 @@ class SemanticSimilarity(object):
         if not sim:
             # this mirrors the original behavior for an undefined type:
             return None
-        
+
         # this mirrors the original missing node error detection:
         # NOTE: it is possible to only get some of the embeddings, e.g., for Q17156448 we get text
         # but not complex/transe, plus there are about 14M fewer text embeddings than complex/transe:
@@ -62,7 +65,7 @@ class SemanticSimilarity(object):
             return None
         elif similarity_type == 'complex':
             # supply poolsize that makes sense for 'complex':
-            return sim.get_most_similar(qnode, topn=topn, poolsize=max(2*topn, 100))
+            return sim.get_most_similar(qnode, topn=topn, poolsize=max(2 * topn, 100))
         else:
             return sim.get_most_similar(qnode, topn=topn)
 
@@ -72,7 +75,7 @@ class SemanticSimilarity_v1(object):
     we need to compare to the old version, even though the new implementation should
     compute the same numbers for class, complex, transe and text (or very close).
     """
-    
+
     def __init__(self):
         self.config = config
         self.util = Utility()
