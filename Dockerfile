@@ -32,7 +32,7 @@ COPY app/ /src/app/
 ARG FLASK_ENV=production
 ENV FLASK_ENV=$FLASK_ENV
 
-ARG KGTK_SIMILARITY_CONFIG=semantic_similarity/config.json
+ARG KGTK_SIMILARITY_CONFIG=semantic_similarity/config_v2_docker.json
 ENV KGTK_SIMILARITY_CONFIG=$KGTK_SIMILARITY_CONFIG
 
 WORKDIR /src
