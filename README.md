@@ -366,3 +366,37 @@ Result:
   ]
 ]
 ```
+
+## Docker Installation
+
+To setup the KGTK Similarity service via docker, please run the following commands.
+
+1. Build the docker image
+```
+cd kgtk-similarity
+docker build -t kgtk-similarity .
+```
+
+2. Update this [line](https://github.com/usc-isi-i2/kgtk-similarity/blob/main/docker-compose.yaml#L11) in the `docker-compose.yaml`
+```
+- <LOCAL PATH TO KGTK RESOURCES DIR>:/src/resources
+```
+
+Replace `<LOCAL PATH TO KGTK RESOURCES DIR>` with the path to a local folder with KGTK Resources. If the resources are in `/kgtk-similarity-resources`, the above line becomes:
+```
+- /kgtk-similarity-resources:/src/resources
+```
+
+3. Run the docker container
+```
+docker-compose up
+```
+and to run the container in background,
+```
+docker-compose up -d
+```
+
+To stop the docker container.
+```
+docker-compose down
+```
