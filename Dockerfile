@@ -12,9 +12,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key 612DEFB798507F25
 # update the registry
 RUN apt-get update
 
-# install graph-tool library for kgtk
-RUN apt-get install python3-graph-tool -y
-
 # install sqlite3 database
 RUN apt-get install sqlite3 -y
 
