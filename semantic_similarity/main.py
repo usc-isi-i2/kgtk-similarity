@@ -4,7 +4,9 @@ from semantic_similarity.semantic_similarity import SemanticSimilarity
 from semantic_similarity.k_nearest_neighbors import FAISS_Index
 import pandas as pd
 from semantic_similarity.utility import Utility
-from semantic_similarity.paths import KGTKPaths
+
+
+# from semantic_similarity.paths import KGTKPaths
 
 
 class QnodeSimilarity(Resource):
@@ -30,7 +32,7 @@ class QnodeSimilarity(Resource):
 
     # restrict the content one can ask about in a single request:
     file_max_lines = utils.config.get('file_api_max_lines', 100)
-    
+
     def post(self):
         column1 = request.args.get('column1', "q1")
         column2 = request.args.get('column2', "q2")
@@ -89,7 +91,7 @@ class NN(Resource):
     # restrict the content one can ask about in a single request:
     nn_api_max_k = utils.config.get('nn_api_max_k', 100)
     debug_requests = utils.config.get('debug_requests', False)
-    
+
     def get(self):
         qnode = request.args.get("qnode")
         similarity_type = request.args.get('similarity_type', self.valid_nn_similarity_types[0])
@@ -99,7 +101,7 @@ class NN(Resource):
             if similarity_type not in self.valid_similarity_types:
                 return {'error': f"{similarity_type} is not a valid similarity type"}
             return {'error': f"{similarity_type} similarity is not currently supported for nearest neighbor requests"}
-            
+
         if self.debug_requests:
             print(f'NN.get: {qnode} {similarity_type}')
 
@@ -109,18 +111,17 @@ class NN(Resource):
         else:
             return self.ss.get_most_similar(qnode, similarity_type, topn=k) or []
 
-
-class Paths(Resource):
-    kgp = KGTKPaths()
-
-    def get(self):
-        source = request.args.get("source", None)
-        target = request.args.get("target", None)
-        max_hops = int(request.args.get("hops", 2))
-        add_labels = request.args.get("labels", "false").strip().lower() == 'true'
-
-        if source is None or target is None:
-            return {"error": "source and target both required"}
-        if max_hops > 4:
-            return {"error": "Maximum hops can not be greater than 4"}
-        return self.kgp.compute_paths(source, target, max_hops=max_hops, add_labels=add_labels)
+# class Paths(Resource):
+#     kgp = KGTKPaths()
+#
+#     def get(self):
+#         source = request.args.get("source", None)
+#         target = request.args.get("target", None)
+#         max_hops = int(request.args.get("hops", 2))
+#         add_labels = request.args.get("labels", "false").strip().lower() == 'true'
+#
+#         if source is None or target is None:
+#             return {"error": "source and target both required"}
+#         if max_hops > 4:
+#             return {"error": "Maximum hops can not be greater than 4"}
+#         return self.kgp.compute_paths(source, target, max_hops=max_hops, add_labels=add_labels)
