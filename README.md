@@ -386,6 +386,7 @@ Replace `<LOCAL PATH TO KGTK RESOURCES DIR>` with the path to a local folder wit
 ```
 - /kgtk-similarity-resources:/src/resources
 ```
+Please make sure that all the files are physically present in the folder. Symbolic links will not work.
 
 3. Create the docker network overlay
 ```
@@ -396,7 +397,21 @@ docker network create overlay
 ```
 docker-compose up
 ```
-and to run the container in background,
+Please wait until a message similar to the following appears ,
+```
+Loading FAISS index...
+ * Serving Flask app 'application'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6433
+ * Running on http://172.18.0.3:6433
+Press CTRL+C to quit
+```
+This can take a minute or two as the container loads the files required for the service. Press `CTRL+C` to stop the container.
+
+
+To run the container in background,
 ```
 docker-compose up -d
 ```
