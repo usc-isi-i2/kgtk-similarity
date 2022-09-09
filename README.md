@@ -387,7 +387,12 @@ Replace `<LOCAL PATH TO KGTK RESOURCES DIR>` with the path to a local folder wit
 - /kgtk-similarity-resources:/src/resources
 ```
 
-3. Run the docker container
+3. Create the docker network overlay
+```
+docker network create overlay
+```
+
+4. Run the docker container
 ```
 docker-compose up
 ```
