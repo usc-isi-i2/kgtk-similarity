@@ -371,6 +371,8 @@ Result:
 
 To setup the KGTK Similarity service via docker, please run the following commands.
 
+0. Make sure [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) is installed.
+
 1. Build the docker image
 ```
 cd kgtk-similarity
